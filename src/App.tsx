@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
-import Navbar from "./components/Navbar";
-import Hero from "./components/Hero";
-import AboutUs from "./components/AboutUs";
-import Footer from "./components/Footer";
+import Navbar from "./components/Global/Navbar";
+import Home from "./pages/Home";
+import Footer from "./components/Global/Footer";
+import GlobalOverlay from "./components/Global/GlobalOverlay";
+import PageLoader from "./components/Global/PageLoader";
 
 function App() {
   const [darkMode, setDarkMode] = useState(() =>
@@ -19,9 +20,13 @@ function App() {
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 text-black dark:text-white transition-colors duration-300">
+      <PageLoader />
+
+      <GlobalOverlay />
       <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />
-      <Hero />
-      <AboutUs />
+      <Home />
+
+      {/* Footer */}
       <Footer />
     </div>
   );
