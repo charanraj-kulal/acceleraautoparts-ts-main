@@ -4,7 +4,7 @@ import AutoPartsForm from "./AutoPartsForm";
 const Hero = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [useVideoBackground, setUseVideoBackground] = useState(false);
-  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
+  const [, setIsVideoLoaded] = useState(false);
 
   // Try multiple possible paths for images
   const slides = [
