@@ -454,7 +454,7 @@ const AutoPartsForm = ({
     }
 
     try {
-      const result = await emailjs.send(
+      await emailjs.send(
         "service_b304oc2", // serviceId
         "template_cxw8wr8", // templateId
         {
