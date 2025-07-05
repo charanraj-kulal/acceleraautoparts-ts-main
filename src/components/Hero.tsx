@@ -1,113 +1,130 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import AutoPartsForm from "./AutoPartsForm";
 
 const Hero = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [useVideoBackground, setUseVideoBackground] = useState(false);
-  const [, setIsVideoLoaded] = useState(false);
+  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
+  const [videoError, setVideoError] = useState(false);
+  const [currentVideoSource, setCurrentVideoSource] = useState(0);
 
-  // Try multiple possible paths for images
-  const slides = [
-    {
-      type: "image",
-      src: "/assets/images/accelera_hero_sliders/1.jpg",
-      fallbackSrc:
-        "https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?w=1920&h=1080&fit=crop",
-      title: "Premium Auto Parts",
-    },
-    {
-      type: "image",
-      src: "/assets/images/accelera_hero_sliders/2.jpg",
-      fallbackSrc:
-        "https://images.unsplash.com/photo-1486754735734-325b5831c3ad?w=1920&h=1080&fit=crop",
-      title: "Quality Engines",
-    },
-    {
-      type: "image",
-      src: "/assets/images/accelera_hero_sliders/3.jpg",
-      fallbackSrc:
-        "https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=1920&h=1080&fit=crop",
-      title: "Expert Service",
-    },
-    {
-      type: "image",
-      src: "/assets/images/accelera_hero_sliders/4.jpg",
-      fallbackSrc:
-        "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=1920&h=1080&fit=crop",
-      title: "Reliable Parts",
-    },
-    {
-      type: "image",
-      src: "/assets/images/accelera_hero_sliders/5.jpg",
-      fallbackSrc:
-        "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=1920&h=1080&fit=crop",
-      title: "Fast Delivery",
-    },
-    {
-      type: "image",
-      src: "/assets/images/accelera_hero_sliders/6.jpg",
-      fallbackSrc:
-        "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1920&h=1080&fit=crop",
-      title: "Certified Quality",
-    },
-    {
-      type: "image",
-      src: "/assets/images/accelera_hero_sliders/7.jpg",
-      fallbackSrc:
-        "https://images.unsplash.com/photo-1590736969955-71cc94901144?w=1920&h=1080&fit=crop",
-      title: "Best Prices",
-    },
-    {
-      type: "image",
-      src: "/assets/images/accelera_hero_sliders/8.jpg",
-      fallbackSrc:
-        "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1920&h=1080&fit=crop",
-      title: "Wide Selection",
-    },
-    {
-      type: "image",
-      src: "/assets/images/accelera_hero_sliders/9.jpg",
-      fallbackSrc:
-        "https://images.unsplash.com/photo-1601362840469-51e4d8d58785?w=1920&h=1080&fit=crop",
-      title: "Professional Service",
-    },
-    {
-      type: "image",
-      src: "/assets/images/accelera_hero_sliders/10.jpg",
-      fallbackSrc:
-        "https://images.unsplash.com/photo-1563297007-0686b7003af7?w=1920&h=1080&fit=crop",
-      title: "Trusted Brand",
-    },
-    {
-      type: "image",
-      src: "/assets/images/accelera_hero_sliders/11.jpg",
-      fallbackSrc:
-        "https://images.unsplash.com/photo-1487754180451-c456f719a1fc?w=1920&h=1080&fit=crop",
-      title: "Customer Satisfaction",
-    },
-    {
-      type: "image",
-      src: "/assets/images/accelera_hero_sliders/12.jpg",
-      fallbackSrc:
-        "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=1920&h=1080&fit=crop",
-      title: "Innovation",
-    },
-    {
-      type: "video",
-      src: "/assets/video/hero_video.mp4",
-      title: "Experience Excellence",
-    },
-  ];
+  // Video sources with multiple fallbacks
+  const videoSources = ["/assets/video/video.mp4"];
+
+  // Memoize slides to prevent recreating on every render
+  const slides = useMemo(
+    () => [
+      {
+        type: "image",
+        src: "/assets/images/accelera_hero_sliders/1.jpg",
+        fallbackSrc:
+          "https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?w=1920&h=1080&fit=crop",
+        title: "Premium Auto Parts",
+      },
+      {
+        type: "image",
+        src: "/assets/images/accelera_hero_sliders/2.jpg",
+        fallbackSrc:
+          "https://images.unsplash.com/photo-1486754735734-325b5831c3ad?w=1920&h=1080&fit=crop",
+        title: "Quality Engines",
+      },
+      {
+        type: "image",
+        src: "/assets/images/accelera_hero_sliders/3.jpg",
+        fallbackSrc:
+          "https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=1920&h=1080&fit=crop",
+        title: "Expert Service",
+      },
+      {
+        type: "image",
+        src: "/assets/images/accelera_hero_sliders/4.jpg",
+        fallbackSrc:
+          "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=1920&h=1080&fit=crop",
+        title: "Reliable Parts",
+      },
+      {
+        type: "image",
+        src: "/assets/images/accelera_hero_sliders/5.jpg",
+        fallbackSrc:
+          "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=1920&h=1080&fit=crop",
+        title: "Fast Delivery",
+      },
+      {
+        type: "image",
+        src: "/assets/images/accelera_hero_sliders/6.jpg",
+        fallbackSrc:
+          "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1920&h=1080&fit=crop",
+        title: "Certified Quality",
+      },
+      {
+        type: "image",
+        src: "/assets/images/accelera_hero_sliders/7.jpg",
+        fallbackSrc:
+          "https://images.unsplash.com/photo-1590736969955-71cc94901144?w=1920&h=1080&fit=crop",
+        title: "Best Prices",
+      },
+      {
+        type: "image",
+        src: "/assets/images/accelera_hero_sliders/8.jpg",
+        fallbackSrc:
+          "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1920&h=1080&fit=crop",
+        title: "Wide Selection",
+      },
+      {
+        type: "image",
+        src: "/assets/images/accelera_hero_sliders/9.jpg",
+        fallbackSrc:
+          "https://images.unsplash.com/photo-1601362840469-51e4d8d58785?w=1920&h=1080&fit=crop",
+        title: "Professional Service",
+      },
+      {
+        type: "image",
+        src: "/assets/images/accelera_hero_sliders/10.jpg",
+        fallbackSrc:
+          "https://images.unsplash.com/photo-1563297007-0686b7003af7?w=1920&h=1080&fit=crop",
+        title: "Trusted Brand",
+      },
+      {
+        type: "image",
+        src: "/assets/images/accelera_hero_sliders/11.jpg",
+        fallbackSrc:
+          "https://images.unsplash.com/photo-1487754180451-c456f719a1fc?w=1920&h=1080&fit=crop",
+        title: "Customer Satisfaction",
+      },
+      {
+        type: "image",
+        src: "/assets/images/accelera_hero_sliders/12.jpg",
+        fallbackSrc:
+          "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=1920&h=1080&fit=crop",
+        title: "Innovation",
+      },
+    ],
+    []
+  );
 
   // Filter image slides for slider functionality
-  const imageSlides = slides.filter((slide) => slide.type === "image");
+  const imageSlides = useMemo(
+    () => slides.filter((slide) => slide.type === "image"),
+    [slides]
+  );
 
   const [imageLoadErrors, setImageLoadErrors] = useState<
     Record<number, boolean>
   >({});
+  const [imageSources, setImageSources] = useState<Record<number, string>>({});
 
+  // Initialize image sources only once
   useEffect(() => {
-    if (!useVideoBackground) {
+    const sources: Record<number, string> = {};
+    imageSlides.forEach((slide, index) => {
+      sources[index] = slide.src;
+    });
+    setImageSources(sources);
+  }, [imageSlides]);
+
+  // Auto-advance slides
+  useEffect(() => {
+    if (!useVideoBackground && imageSlides.length > 0) {
       const timer = setInterval(() => {
         setCurrentSlide((prev) => {
           const nextSlide = (prev + 1) % imageSlides.length;
@@ -119,16 +136,14 @@ const Hero = () => {
     }
   }, [imageSlides.length, useVideoBackground]);
 
-  const [imageSources, setImageSources] = useState<Record<number, string>>({});
-
-  // Initialize image sources
+  // Reset video states when switching to video mode
   useEffect(() => {
-    const sources: Record<number, string> = {};
-    imageSlides.forEach((slide, index) => {
-      sources[index] = slide.src;
-    });
-    setImageSources(sources);
-  }, [imageSlides]);
+    if (useVideoBackground) {
+      setVideoError(false);
+      setIsVideoLoaded(false);
+      setCurrentVideoSource(0);
+    }
+  }, [useVideoBackground]);
 
   const handleImageError = (index: number) => {
     console.error(
@@ -153,6 +168,28 @@ const Hero = () => {
     console.log(
       `Image loaded successfully at index ${index}: ${imageSources[index]}`
     );
+  };
+
+  const handleVideoError = (e: React.SyntheticEvent<HTMLVideoElement>) => {
+    console.error(`Video failed to load (source ${currentVideoSource}):`, e);
+
+    // Try next video source if available
+    if (currentVideoSource < videoSources.length - 1) {
+      console.log(`Trying next video source: ${currentVideoSource + 1}`);
+      setCurrentVideoSource(currentVideoSource + 1);
+    } else {
+      console.log("All video sources failed, switching to images");
+      setVideoError(true);
+      setUseVideoBackground(false);
+    }
+  };
+
+  const handleVideoLoad = () => {
+    console.log(
+      `Video loaded successfully: ${videoSources[currentVideoSource]}`
+    );
+    setIsVideoLoaded(true);
+    setVideoError(false);
   };
 
   const handleFormSubmit = (formData: any) => {
@@ -180,6 +217,9 @@ const Hero = () => {
         <div>Current Slide: {currentSlide}</div>
         <div>Total Images: {imageSlides.length}</div>
         <div>Video Mode: {useVideoBackground ? "ON" : "OFF"}</div>
+        <div>Video Loaded: {isVideoLoaded ? "YES" : "NO"}</div>
+        <div>Video Error: {videoError ? "YES" : "NO"}</div>
+        <div>Current Video Source: {currentVideoSource}</div>
       </div>
 
       {/* Background Toggle Controls */}
@@ -197,27 +237,46 @@ const Hero = () => {
         {useVideoBackground ? (
           // Video Background
           <div className="absolute inset-0">
-            <video
-              className="w-full h-full object-cover"
-              autoPlay
-              muted
-              loop
-              playsInline
-              onLoadedData={() => {
-                setIsVideoLoaded(true);
-                console.log("Video loaded successfully");
-              }}
-              onError={(e) => {
-                console.error("Video failed to load:", e);
-                setIsVideoLoaded(false);
-                // Automatically switch back to images if video fails
-                setUseVideoBackground(false);
-              }}
-            >
-              <source src="/assets/video/hero_video.mp4" type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
-            <div className="absolute inset-0 bg-black bg-opacity-40"></div>
+            {videoError ? (
+              // Video fallback when all sources fail
+              <div className="w-full h-full bg-gradient-to-br from-gray-900 to-gray-800 flex items-center justify-center">
+                <div className="text-white text-center">
+                  <div className="text-6xl mb-4">🎥</div>
+                  <h3 className="text-2xl font-bold mb-2">Video Unavailable</h3>
+                  <p className="text-gray-300 mb-4">
+                    All video sources failed to load
+                  </p>
+                  <button
+                    onClick={() => setUseVideoBackground(false)}
+                    className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-full transition-colors"
+                  >
+                    Switch to Images
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <video
+                key={currentVideoSource} // Force re-render when source changes
+                className="w-full h-full object-cover"
+                autoPlay
+                muted
+                loop
+                playsInline
+                onLoadedData={handleVideoLoad}
+                onError={handleVideoError}
+                onCanPlay={() => {
+                  console.log("Video can play");
+                  setIsVideoLoaded(true);
+                }}
+              >
+                <source
+                  src={videoSources[currentVideoSource]}
+                  type="video/mp4"
+                />
+                Your browser does not support the video tag.
+              </video>
+            )}
+            <div className="absolute inset-0 bg-black opacity-40"></div>
           </div>
         ) : (
           // Image Slider
@@ -250,7 +309,7 @@ const Hero = () => {
                   onError={() => handleImageError(index)}
                 />
               )}
-              <div className="absolute inset-0 bg-black bg-opacity-40"></div>
+              <div className="absolute inset-0 bg-black opacity-80"></div>
             </div>
           ))
         )}
