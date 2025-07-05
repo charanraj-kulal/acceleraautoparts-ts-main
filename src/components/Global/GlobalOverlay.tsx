@@ -4,7 +4,7 @@ import { FaArrowUp, FaPhone, FaWhatsapp } from "react-icons/fa";
 const GlobalOverlay = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
+  const [, setIsMobile] = useState(false);
 
   // Check scroll position and window size
   useEffect(() => {
