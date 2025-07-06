@@ -134,28 +134,28 @@ const AboutUs = () => {
   // Enhanced team members
   const teamMembers = [
     {
-      name: "Mike Johnson",
+      name: "Akash",
       role: "Founder & CEO",
       experience: "ASE Master Technician",
       quote: "We don't sell parts - we keep cars on the road.",
       specialties: ["Leadership", "Technical Expertise", "Customer Focus"],
     },
     {
-      name: "Sarah Chen",
+      name: "John Doe",
       role: "Quality Director",
       experience: "15 years in parts inspection",
       quote: "If I wouldn't put it on my car, it doesn't leave our warehouse.",
       specialties: ["Quality Control", "Inspection", "Standards"],
     },
     {
-      name: "David Rodriguez",
+      name: "John Doe",
       role: "Technical Manager",
       experience: "Former dealership foreman",
       quote: "The right part makes all the difference.",
       specialties: ["Technical Support", "Installation", "Troubleshooting"],
     },
     {
-      name: "Lisa Williams",
+      name: "John Doe",
       role: "Customer Care",
       experience: "10 years in auto industry",
       quote: "Helping customers is my top priority.",
@@ -250,7 +250,7 @@ const AboutUs = () => {
                 only customer."
               </p>
               <p className="text-orange-900 dark:text-orange-200 font-semibold">
-                - Mike Johnson, Founder
+                - Akash Suchitha, Founder
               </p>
             </div>
           </div>
