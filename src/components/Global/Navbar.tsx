@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 
 interface NavbarProps {
   darkMode: boolean;
@@ -7,6 +8,73 @@ interface NavbarProps {
 
 const Navbar = ({ darkMode, setDarkMode }: NavbarProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const location = useLocation();
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  // Close mobile menu when route changes
+  useEffect(() => {
+    setIsMenuOpen(false);
+  }, [location.pathname]);
+
+  const handleDropdownClick = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  const handleDropdownMouseEnter = () => {
+    setIsDropdownOpen(true);
+  };
+
+  const handleDropdownMouseLeave = () => {
+    setIsDropdownOpen(false);
+  };
+
+  // Helper function to determine if a link is active
+  const isActiveLink = (path: string) => {
+    if (path === "/" && location.pathname === "/") return true;
+    if (path !== "/" && location.pathname.startsWith(path)) return true;
+    return false;
+  };
+
+  // Helper function to determine if used auto parts section is active
+  const isUsedAutoPartsActive = () => {
+    return location.pathname.startsWith("/used-auto-parts");
+  };
+
+  // Helper function to get link classes
+  const getLinkClasses = (path: string) => {
+    const baseClasses =
+      "px-3 py-2 text-sm font-medium transition-colors duration-200";
+    const activeClasses = "text-orange-500 hover:text-orange-600";
+    const inactiveClasses =
+      "text-gray-700 dark:text-gray-300 hover:text-orange-500";
+
+    return `${baseClasses} ${
+      isActiveLink(path) ? activeClasses : inactiveClasses
+    }`;
+  };
+
+  // Handle link clicks - scroll to top
+  const handleLinkClick = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   return (
     <nav className="bg-white dark:bg-gray-900 shadow-lg border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50">
@@ -30,29 +98,46 @@ const Navbar = ({ darkMode, setDarkMode }: NavbarProps) => {
           {/* Desktop Navigation */}
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-8">
-              <a
-                href="#home"
-                className="text-orange-500 hover:text-orange-600 px-3 py-2 text-sm font-medium transition-colors duration-200"
+              <Link
+                to="/"
+                onClick={handleLinkClick}
+                className={getLinkClasses("/")}
               >
                 HOME
-              </a>
-              <a
-                href="#about"
-                className="text-gray-700 dark:text-gray-300 hover:text-orange-500 px-3 py-2 text-sm font-medium transition-colors duration-200"
+              </Link>
+              <Link
+                to="/aboutus"
+                onClick={handleLinkClick}
+                className={getLinkClasses("/aboutus")}
               >
                 ABOUT US
-              </a>
-              <a
-                href="#contact"
-                className="text-gray-700 dark:text-gray-300 hover:text-orange-500 px-3 py-2 text-sm font-medium transition-colors duration-200"
+              </Link>
+              <Link
+                to="/contactus"
+                onClick={handleLinkClick}
+                className={getLinkClasses("/contactus")}
               >
                 CONTACT
-              </a>
-              <div className="relative group">
-                <button className="text-gray-700 dark:text-gray-300 hover:text-orange-500 px-3 py-2 text-sm font-medium transition-colors duration-200 flex items-center">
+              </Link>
+              <div
+                className="relative"
+                ref={dropdownRef}
+                onMouseEnter={handleDropdownMouseEnter}
+                onMouseLeave={handleDropdownMouseLeave}
+              >
+                <button
+                  onClick={handleDropdownClick}
+                  className={`px-3 py-2 text-sm font-medium transition-colors duration-200 flex items-center ${
+                    isUsedAutoPartsActive()
+                      ? "text-orange-500 hover:text-orange-600"
+                      : "text-gray-700 dark:text-gray-300 hover:text-orange-500"
+                  }`}
+                >
                   USED AUTO PARTS
                   <svg
-                    className="ml-1 h-4 w-4"
+                    className={`ml-1 h-4 w-4 transform transition-transform duration-200 ${
+                      isDropdownOpen ? "rotate-180" : ""
+                    }`}
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -65,26 +150,84 @@ const Navbar = ({ darkMode, setDarkMode }: NavbarProps) => {
                     />
                   </svg>
                 </button>
-                <div className="absolute left-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                <div
+                  className={`absolute left-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg transition-all duration-200 ${
+                    isDropdownOpen
+                      ? "opacity-100 visible"
+                      : "opacity-0 invisible"
+                  }`}
+                >
                   <div className="py-1">
-                    <a
-                      href="#engines"
+                    <Link
+                      to="/used-auto-parts/used-engines"
+                      onClick={handleLinkClick}
                       className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-orange-50 dark:hover:bg-gray-700 hover:text-orange-500"
                     >
-                      Engines
-                    </a>
-                    <a
-                      href="#transmissions"
+                      Used Engines
+                    </Link>
+                    <Link
+                      to="/used-auto-parts/used-transmissions"
+                      onClick={handleLinkClick}
                       className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-orange-50 dark:hover:bg-gray-700 hover:text-orange-500"
                     >
-                      Transmissions
-                    </a>
-                    <a
-                      href="#body-parts"
+                      Used Transmissions
+                    </Link>
+                    <Link
+                      to="/used-auto-parts/used-wheels"
+                      onClick={handleLinkClick}
                       className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-orange-50 dark:hover:bg-gray-700 hover:text-orange-500"
                     >
-                      Body Parts
-                    </a>
+                      Used Wheels
+                    </Link>
+                    <Link
+                      to="/used-auto-parts/drive-shaft"
+                      onClick={handleLinkClick}
+                      className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-orange-50 dark:hover:bg-gray-700 hover:text-orange-500"
+                    >
+                      Drive Shaft
+                    </Link>
+                    <Link
+                      to="/used-auto-parts/used-ac-compressor"
+                      onClick={handleLinkClick}
+                      className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-orange-50 dark:hover:bg-gray-700 hover:text-orange-500"
+                    >
+                      Used AC Compressor
+                    </Link>
+                    <Link
+                      to="/used-auto-parts/used-headlight"
+                      onClick={handleLinkClick}
+                      className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-orange-50 dark:hover:bg-gray-700 hover:text-orange-500"
+                    >
+                      Used Headlight
+                    </Link>
+                    <Link
+                      to="/used-auto-parts/used-transfer-case"
+                      onClick={handleLinkClick}
+                      className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-orange-50 dark:hover:bg-gray-700 hover:text-orange-500"
+                    >
+                      Used Transfer Case
+                    </Link>
+                    <Link
+                      to="/used-auto-parts/used-axle-assembly"
+                      onClick={handleLinkClick}
+                      className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-orange-50 dark:hover:bg-gray-700 hover:text-orange-500"
+                    >
+                      Used Axle Assembly
+                    </Link>
+                    <Link
+                      to="/used-auto-parts/used-radiator"
+                      onClick={handleLinkClick}
+                      className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-orange-50 dark:hover:bg-gray-700 hover:text-orange-500"
+                    >
+                      Used Radiator
+                    </Link>
+                    <Link
+                      to="/used-auto-parts/used-steering-column"
+                      onClick={handleLinkClick}
+                      className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-orange-50 dark:hover:bg-gray-700 hover:text-orange-500"
+                    >
+                      Used Steering Column
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -179,30 +322,50 @@ const Navbar = ({ darkMode, setDarkMode }: NavbarProps) => {
       {isMenuOpen && (
         <div className="md:hidden bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
           <div className="px-2 pt-2 pb-3 space-y-1">
-            <a
-              href="#home"
-              className="block px-3 py-2 text-orange-500 font-medium"
+            <Link
+              to="/"
+              onClick={handleLinkClick}
+              className={`block px-3 py-2 font-medium ${
+                isActiveLink("/")
+                  ? "text-orange-500"
+                  : "text-gray-700 dark:text-gray-300 hover:text-orange-500"
+              }`}
             >
               HOME
-            </a>
-            <a
-              href="#about"
-              className="block px-3 py-2 text-gray-700 dark:text-gray-300 hover:text-orange-500"
+            </Link>
+            <Link
+              to="/aboutus"
+              onClick={handleLinkClick}
+              className={`block px-3 py-2 ${
+                isActiveLink("/aboutus")
+                  ? "text-orange-500"
+                  : "text-gray-700 dark:text-gray-300 hover:text-orange-500"
+              }`}
             >
               ABOUT US
-            </a>
-            <a
-              href="#contact"
-              className="block px-3 py-2 text-gray-700 dark:text-gray-300 hover:text-orange-500"
+            </Link>
+            <Link
+              to="/contactus"
+              onClick={handleLinkClick}
+              className={`block px-3 py-2 ${
+                isActiveLink("/contactus")
+                  ? "text-orange-500"
+                  : "text-gray-700 dark:text-gray-300 hover:text-orange-500"
+              }`}
             >
               CONTACT
-            </a>
-            <a
-              href="#parts"
-              className="block px-3 py-2 text-gray-700 dark:text-gray-300 hover:text-orange-500"
+            </Link>
+            <Link
+              to="/used-auto-parts"
+              onClick={handleLinkClick}
+              className={`block px-3 py-2 ${
+                isUsedAutoPartsActive()
+                  ? "text-orange-500"
+                  : "text-gray-700 dark:text-gray-300 hover:text-orange-500"
+              }`}
             >
               USED AUTO PARTS
-            </a>
+            </Link>
             <div className="px-3 py-2">
               <button className="w-full bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-full text-sm font-medium">
                 FREE QUOTE
@@ -214,4 +377,5 @@ const Navbar = ({ darkMode, setDarkMode }: NavbarProps) => {
     </nav>
   );
 };
+
 export default Navbar;
