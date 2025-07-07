@@ -60,8 +60,6 @@ const Hero = () => {
         {/* Bottom gradient overlay for smooth flow, dark/light mode compatible */}
 
         <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-40 sm:h-56 md:h-64 bg-gradient-to-t from-gray-900 via-gray-800 to-transparent dark:from-gray-950 dark:via-gray-900 dark:to-transparent"></div>
-        {/* <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-40 sm:h-56 md:h-64 bg-gradient-to-t from-gray-50 dark:from-gray-900 via-gray-50/70 dark:via-gray-900/70 to-transparent"></div> */}
-        {/* <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-40 sm:h-56 md:h-64 bg-gradient-to-t from-gray-900 via-gray-800 to-transparent dark:from-gray-950 dark:via-gray-900 dark:to-transparent"></div> */}
       </div>
 
       {/* Content Overlay */}
@@ -83,7 +81,7 @@ const Hero = () => {
         </div>
 
         {/* Right Form */}
-        <div className="flex-1 max-w-sm sm:max-w-md  lg:max-w-lg xl:ml-8 w-full">
+        <div className="flex-1 max-w-sm sm:max-w-md  lg:max-w-lg xl:ml-8 w-full mt-10 sm:mt-0">
           <AutoPartsForm
             className="max-h-[100vh] sm:max-h-[70vh] lg:max-h-[80vh] overflow-y-auto"
             showTitle={true}

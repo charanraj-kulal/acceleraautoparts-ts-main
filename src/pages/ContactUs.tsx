@@ -158,13 +158,29 @@ const ContactUs = () => {
     {
       icon: Phone,
       title: "Phone",
-      details: ["+1 201-984-5730"],
+      details: [
+        <a
+          href="tel:+12019845730"
+          className="text-blue-500 hover:underline"
+          key="phone"
+        >
+          +1 201-984-5730
+        </a>,
+      ],
       color: "text-blue-500",
     },
     {
       icon: Mail,
       title: "Email",
-      details: ["info@acceleraautoparts.com"],
+      details: [
+        <a
+          href="mailto:info@acceleraautoparts.com"
+          className="text-green-500 hover:underline"
+          key="email"
+        >
+          info@acceleraautoparts.com
+        </a>,
+      ],
       color: "text-green-500",
     },
     {
@@ -531,6 +547,7 @@ const ContactUs = () => {
               className="bg-white text-orange-600 hover:bg-gray-100 px-8 py-3 rounded-lg font-semibold transition-all duration-200 transform hover:scale-105 flex items-center justify-center space-x-2"
             >
               <Phone className="w-5 h-5" />
+
               <span>Call Now: +1 201-984-5730</span>
             </a>
             <a

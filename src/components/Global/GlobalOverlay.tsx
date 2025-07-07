@@ -50,14 +50,17 @@ const GlobalOverlay = () => {
 
   // Replace with your actual phone number and WhatsApp link
   const phoneNumber = "+1234567890";
-  const whatsappLink = "https://wa.me/1234567890";
+  const whatsappMessage = encodeURIComponent(
+    "Hello, I'm interested in your auto parts. Please provide more details."
+  );
+  const whatsappLink = `https://wa.me/1234567890?text=${whatsappMessage}`;
 
   return (
     <div className="fixed z-50 pointer-events-none">
       {/* Back to Top Button with Progress and Smooth Animation */}
       <button
         onClick={scrollToTop}
-        className={`fixed right-4 bottom-24 md:right-6 md:bottom-6 bg-orange-500 text-white rounded-full p-3 shadow-lg hover:bg-orange-600 transition-all duration-500 ease-out transform hover:scale-110 pointer-events-auto ${
+        className={`fixed right-2 bottom-20 sm:right-3 sm:bottom-22 md:right-4 md:bottom-24 lg:right-6 lg:bottom-6 bg-orange-500 text-white rounded-full shadow-lg hover:bg-orange-600 transition-all duration-500 ease-out transform hover:scale-110 pointer-events-auto p-2 sm:p-2.5 md:p-3 lg:p-4 ${
           isVisible
             ? "translate-y-0 opacity-100 scale-100"
             : "translate-y-16 opacity-0 scale-75"
@@ -68,7 +71,7 @@ const GlobalOverlay = () => {
         }}
         aria-label="Back to top"
       >
-        <div className="relative w-12 h-12 flex items-center justify-center">
+        <div className="relative w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 flex items-center justify-center">
           {/* Progress circle */}
           <svg
             className="absolute w-full h-full -rotate-90"
@@ -97,31 +100,56 @@ const GlobalOverlay = () => {
               }}
             />
           </svg>
-          <FaArrowUp className="relative text-xl transform transition-transform duration-300 group-hover:translate-y-[-2px]" />
+          <FaArrowUp className="relative text-sm sm:text-base md:text-lg lg:text-xl transform transition-transform duration-300 group-hover:translate-y-[-2px]" />
         </div>
       </button>
 
-      {/* Sticky Contact Buttons */}
-      <div className="fixed z-40 hidden lg:flex flex-col gap-4 right-6 top-1/2 -translate-y-1/2 pointer-events-auto">
+      {/* Sticky Contact Buttons - Desktop */}
+      <div className="fixed z-40 hidden lg:flex flex-col gap-3 xl:gap-4 right-4 xl:right-6 top-1/2 -translate-y-1/2 pointer-events-auto">
         {/* WhatsApp Button */}
         <a
           href={whatsappLink}
           target="_blank"
           rel="noopener noreferrer"
-          className="bg-green-500 text-white rounded-full p-3 shadow-lg hover:bg-green-600 transition-all duration-300 transform hover:scale-110 flex items-center justify-center "
+          className="bg-green-500 text-white rounded-full p-3 xl:p-4 shadow-lg hover:bg-green-600 transition-all duration-300 transform hover:scale-110 flex items-center justify-center"
           aria-label="Contact via WhatsApp"
         >
-          <FaWhatsapp className="text-2xl" />
+          <FaWhatsapp className="text-xl xl:text-2xl" />
         </a>
 
         {/* Phone Button */}
         <a
           href={`tel:${phoneNumber}`}
-          className="bg-blue-500 text-white rounded-full p-3 shadow-lg hover:bg-blue-600 transition-all duration-300 transform hover:scale-110 flex items-center justify-center"
+          className="bg-blue-500 text-white rounded-full p-3 xl:p-4 shadow-lg hover:bg-blue-600 transition-all duration-300 transform hover:scale-110 flex items-center justify-center"
           aria-label="Call us"
         >
-          <FaPhone className="text-xl" />
+          <FaPhone className="text-lg xl:text-xl" />
         </a>
+      </div>
+
+      {/* Mobile Contact Buttons - Bottom Fixed */}
+      <div className="fixed z-40 lg:hidden bottom-2 left-1/2 -translate-x-1/2 pointer-events-auto">
+        <div className="flex gap-2 sm:gap-3 bg-white/90 backdrop-blur-sm rounded-full p-2 sm:p-3 shadow-lg border border-gray-200">
+          {/* WhatsApp Button */}
+          <a
+            href={whatsappLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-green-500 text-white rounded-full p-2 sm:p-2.5 md:p-3 shadow-sm hover:bg-green-600 transition-all duration-300 transform hover:scale-110 flex items-center justify-center"
+            aria-label="Contact via WhatsApp"
+          >
+            <FaWhatsapp className="text-base sm:text-lg md:text-xl" />
+          </a>
+
+          {/* Phone Button */}
+          <a
+            href={`tel:${phoneNumber}`}
+            className="bg-blue-500 text-white rounded-full p-2 sm:p-2.5 md:p-3 shadow-sm hover:bg-blue-600 transition-all duration-300 transform hover:scale-110 flex items-center justify-center"
+            aria-label="Call us"
+          >
+            <FaPhone className="text-sm sm:text-base md:text-lg" />
+          </a>
+        </div>
       </div>
     </div>
   );

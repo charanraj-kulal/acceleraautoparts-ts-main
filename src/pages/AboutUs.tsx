@@ -941,7 +941,7 @@ const AboutUs = () => {
                 Speak with our experts
               </p>
               <p className="text-2xl font-bold text-orange-500">
-                +1 201-984-5730
+                <a href="tel:+12019845730">+1 201-984-5730</a>
               </p>
             </div>
 
@@ -956,7 +956,9 @@ const AboutUs = () => {
                 24/7 email support
               </p>
               <p className="text-lg font-bold text-orange-500">
-                info@acceleraautoparts.com
+                <a href="mailto:info@acceleraautoparts.com">
+                  info@acceleraautoparts.com
+                </a>
               </p>
             </div>
 
