@@ -58,34 +58,42 @@ const Hero = () => {
         )}
         <div className="absolute inset-0 bg-black opacity-40"></div>
         {/* Bottom gradient overlay for smooth flow, dark/light mode compatible */}
-
         <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-40 sm:h-56 md:h-64 bg-gradient-to-t from-gray-900 via-gray-800 to-transparent dark:from-gray-950 dark:via-gray-900 dark:to-transparent"></div>
       </div>
 
-      {/* Content Overlay */}
-      <div className="relative z-10 flex flex-col xl:flex-row items-center justify-between h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8">
-        {/* Left Content */}
-        <div className="flex-1 text-white text-center xl:text-left mb-6 lg:mb-8 xl:mb-0 px-2">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 sm:mb-6 leading-tight">
-            Find Well-Inspected OEM
-            <br className="hidden sm:block" />
-            Grade A Used Auto Parts With
-            <br className="hidden sm:block" />
-            <span className="text-orange-500">The Best Deals</span>
-          </h1>
-          <button className="bg-orange-500 hover:bg-orange-600 text-white px-6 sm:px-8 py-2 sm:py-3 rounded-full text-base sm:text-lg font-semibold transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl">
-            <Link to="/contactus" className="flex items-center justify-center">
-              Contact Us
-            </Link>
-          </button>
+      {/* Content Overlay - Split into two sections */}
+      <div className="relative z-10 h-full">
+        {/* Left Content - Takes up most of the screen */}
+        <div className="absolute inset-0 flex items-center justify-start">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8">
+            <div className="text-white text-center xl:text-left px-2">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 sm:mb-6 leading-tight">
+                Find Well-Inspected OEM
+                <br className="hidden sm:block" />
+                Grade A Used Auto Parts With
+                <br className="hidden sm:block" />
+                <span className="text-orange-500">The Best Deals</span>
+              </h1>
+              <button className="bg-orange-500 hover:bg-orange-600 text-white px-6 sm:px-8 py-2 sm:py-3 rounded-full text-base sm:text-lg font-semibold transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                <Link
+                  to="/contactus"
+                  className="flex items-center justify-center"
+                >
+                  Contact Us
+                </Link>
+              </button>
+            </div>
+          </div>
         </div>
 
-        {/* Right Form */}
-        <div className="flex-1 max-w-sm sm:max-w-md  lg:max-w-lg xl:ml-8 w-full mt-20 sm:mt-0">
-          <AutoPartsForm
-            className="max-h-[100vh] sm:max-h-[70vh] lg:max-h-[80vh] overflow-y-auto"
-            showTitle={true}
-          />
+        {/* Right Form - Positioned separately */}
+        <div className="absolute top-0 right-0 h-full flex items-center justify-end pr-4 sm:pr-6 lg:pr-8">
+          <div className="max-w-sm sm:max-w-md lg:max-w-lg">
+            <AutoPartsForm
+              className="max-h-[100vh] sm:max-h-[70vh] lg:max-h-[80vh] overflow-y-auto"
+              showTitle={true}
+            />
+          </div>
         </div>
       </div>
     </div>
