@@ -1,5 +1,9 @@
 import { useState, useEffect, type ChangeEvent, type FormEvent } from "react";
-import emailjs from "@emailjs/browser";
+import emailjs from "emailjs-com";
+import "@fontsource/montserrat/400.css";
+import "@fontsource/montserrat/700.css";
+import React from "react";
+
 type FormDataState = {
   name: string;
   email: string;
@@ -10,15 +14,83 @@ type FormDataState = {
   partType: string;
 };
 
-// Form Component - Reusable
+// Enhanced Modal Component with blur backdrop
+const Modal = ({
+  isOpen,
+  onClose,
+  children,
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+  children: React.ReactNode;
+}) => {
+  // Handle ESC key press
+  useEffect(() => {
+    const handleEscapeKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        onClose();
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener("keydown", handleEscapeKey);
+      // Prevent body scroll when modal is open
+      document.body.style.overflow = "hidden";
+    }
+
+    return () => {
+      document.removeEventListener("keydown", handleEscapeKey);
+      document.body.style.overflow = "unset";
+    };
+  }, [isOpen, onClose]);
+
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+      {/* Enhanced backdrop with blur effect */}
+      <div
+        className="absolute inset-0 bg-black/50 backdrop-blur-sm transition-all duration-300"
+        onClick={onClose}
+      />
+      <div className="relative bg-white dark:bg-gray-800 rounded-2xl shadow-2xl font-[Montserrat] max-w-2xl w-full max-h-[90vh] overflow-y-auto transform transition-all duration-300 scale-100 opacity-100">
+        {/* Enhanced close button */}
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 z-10 w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-700 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600 transition-all duration-200"
+          aria-label="Close modal"
+        >
+          <svg
+            className="w-5 h-5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
+        {children}
+      </div>
+    </div>
+  );
+};
+
+// Enhanced Form Component
 const AutoPartsForm = ({
   onSubmit,
   className = "",
   showTitle = true,
+  onSuccess,
 }: {
   onSubmit?: (formData: FormDataState) => void;
   className?: string;
   showTitle?: boolean;
+  onSuccess?: () => void;
 }) => {
   const [formData, setFormData] = useState<FormDataState>({
     name: "",
@@ -285,67 +357,6 @@ const AutoPartsForm = ({
       "Pilot",
       "Ridgeline",
     ],
-    Jeep: [
-      "Wrangler",
-      "Cherokee",
-      "Grand Cherokee",
-      "Compass",
-      "Renegade",
-      "Wagoneer",
-      "Gladiator",
-      "Patriot",
-      "Liberty",
-      "Commander",
-      "Comanche",
-      "CJ",
-      "Scrambler",
-      "Renegade (Classic)",
-      "J10",
-      "J20",
-      "Willys",
-      "FC",
-      "Grand Wagoneer",
-      "Laredo",
-    ],
-    "Mercedes-Benz": [
-      "C-Class",
-      "E-Class",
-      "S-Class",
-      "A-Class",
-      "B-Class",
-      "CLK",
-      "SLK",
-      "SL",
-      "CLS",
-      "GLK",
-      "ML",
-      "GL",
-      "G-Class",
-      "R-Class",
-      "CLA",
-      "GLA",
-      "GLC",
-      "GLE",
-      "GLS",
-      "AMG GT",
-      "EQE",
-      "EQS",
-      "EQA",
-      "EQB",
-      "EQC",
-    ],
-    Nissan: [
-      "Altima",
-      "Sentra",
-      "Maxima",
-      "Rogue",
-      "Pathfinder",
-      "Armada",
-      "Titan",
-      "Frontier",
-      "370Z",
-      "GT-R",
-    ],
     Toyota: [
       "4Runner",
       "Avalon",
@@ -411,7 +422,6 @@ const AutoPartsForm = ({
       (Object.keys(carData) as string[]).includes(formData.make)
     ) {
       setAvailableModels([...carData[formData.make as CarMake]]);
-      // Only reset model if it's not valid for the new make
       if (
         formData.model &&
         !carData[formData.make as CarMake].includes(formData.model)
@@ -438,7 +448,6 @@ const AutoPartsForm = ({
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Validate required fields
     if (
       !formData.name ||
       !formData.email ||
@@ -483,9 +492,12 @@ const AutoPartsForm = ({
         partType: "",
       });
 
-      // Call parent callback if provided
       if (onSubmit) {
         onSubmit(formData);
+      }
+
+      if (onSuccess) {
+        onSuccess();
       }
     } catch (error) {
       console.error("Error submitting form:", error);
@@ -497,19 +509,23 @@ const AutoPartsForm = ({
 
   return (
     <div
-      className={`bg-white dark:bg-gray-800 rounded-lg shadow-2xl p-6 ${className}`}
+      className={`bg-white dark:bg-gray-800 font-[Montserrat] rounded-2xl shadow-2xl p-8 ${className}`}
     >
       {showTitle && (
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
-          Submit Your Request To Get A Free Quote
-        </h2>
+        <div className="text-center mb-8">
+          <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+            Get Your Free Quote
+          </h2>
+          <p className="text-gray-600 dark:text-gray-300">
+            Submit your request and we'll get back to you with the best price
+          </p>
+        </div>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        {/* Name and Email */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <form onSubmit={handleSubmit} className="space-y-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Your Name *
             </label>
             <input
@@ -518,12 +534,12 @@ const AutoPartsForm = ({
               value={formData.name}
               onChange={handleInputChange}
               required
-              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-orange-500"
+              className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all duration-200"
               placeholder="Enter your name"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Your Email *
             </label>
             <input
@@ -532,16 +548,15 @@ const AutoPartsForm = ({
               value={formData.email}
               onChange={handleInputChange}
               required
-              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-orange-500"
+              className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all duration-200"
               placeholder="Enter your email"
             />
           </div>
         </div>
 
-        {/* Phone and Year */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Your Phone *
             </label>
             <input
@@ -550,12 +565,12 @@ const AutoPartsForm = ({
               value={formData.phone}
               onChange={handleInputChange}
               required
-              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-orange-500"
+              className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all duration-200"
               placeholder="Enter your phone"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Model Year *
             </label>
             <select
@@ -563,7 +578,7 @@ const AutoPartsForm = ({
               value={formData.year}
               onChange={handleInputChange}
               required
-              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-orange-500"
+              className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all duration-200"
             >
               <option value="">Select Year</option>
               {years.map((year) => (
@@ -575,10 +590,9 @@ const AutoPartsForm = ({
           </div>
         </div>
 
-        {/* Make and Model */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Make *
             </label>
             <select
@@ -586,7 +600,7 @@ const AutoPartsForm = ({
               value={formData.make}
               onChange={handleInputChange}
               required
-              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-orange-500"
+              className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all duration-200"
             >
               <option value="">Select Make</option>
               {makes.map((make) => (
@@ -597,7 +611,7 @@ const AutoPartsForm = ({
             </select>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Model *
             </label>
             <select
@@ -606,7 +620,7 @@ const AutoPartsForm = ({
               onChange={handleInputChange}
               required
               disabled={!formData.make}
-              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-orange-500 disabled:opacity-50"
+              className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
             >
               <option value="">Select Model</option>
               {availableModels.map((model) => (
@@ -618,9 +632,8 @@ const AutoPartsForm = ({
           </div>
         </div>
 
-        {/* Part Type */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
             Part Type *
           </label>
           <select
@@ -628,7 +641,7 @@ const AutoPartsForm = ({
             value={formData.partType}
             onChange={handleInputChange}
             required
-            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-orange-500"
+            className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all duration-200"
           >
             <option value="">Select Part Type</option>
             {partTypes.map((part) => (
@@ -642,55 +655,72 @@ const AutoPartsForm = ({
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full bg-orange-500 hover:bg-orange-600 disabled:bg-gray-400 text-white py-3 px-4 rounded-full font-semibold transition-colors duration-200 transform hover:scale-105 disabled:transform-none"
+          className="w-full bg-orange-500 hover:bg-orange-600 disabled:bg-gray-400 text-white py-4 px-6 rounded-lg font-semibold text-lg transition-all duration-200 transform hover:scale-105 disabled:transform-none disabled:cursor-not-allowed shadow-lg hover:shadow-xl"
         >
-          {isSubmitting ? "SUBMITTING..." : "SUBMIT REQUEST"}
+          {isSubmitting ? (
+            <div className="flex items-center justify-center">
+              <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+              SUBMITTING...
+            </div>
+          ) : (
+            "SUBMIT REQUEST"
+          )}
         </button>
       </form>
     </div>
   );
 };
 
-const Modal = ({
+// Modal Form Component that combines both
+const AutoPartsModalForm = ({
   isOpen,
   onClose,
-  children,
+  onSubmit,
+  showTitle = true,
 }: {
   isOpen: boolean;
   onClose: () => void;
-  children: React.ReactNode;
+  onSubmit?: (formData: FormDataState) => void;
+  showTitle?: boolean;
 }) => {
-  if (!isOpen) return null;
+  const handleFormSuccess = () => {
+    setTimeout(() => {
+      onClose(); // Close modal after successful submission with slight delay
+    }, 1500);
+  };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
-      <div
-        className="absolute inset-0 bg-black bg-opacity-50"
-        onClick={onClose}
+    <Modal isOpen={isOpen} onClose={onClose}>
+      <AutoPartsForm
+        onSubmit={onSubmit}
+        onSuccess={handleFormSuccess}
+        showTitle={showTitle}
       />
-      <div className="relative bg-white dark:bg-gray-800 rounded-lg shadow-2xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto">
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
-        >
-          <svg
-            className="w-6 h-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M6 18L18 6M6 6l12 12"
-            />
-          </svg>
-        </button>
-        {children}
-      </div>
-    </div>
+    </Modal>
   );
 };
-export default AutoPartsForm;
-export { Modal };
+
+// Hook for auto-opening modal after delay
+const useAutoOpenModal = (delay: number = 5000) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [hasAutoOpened, setHasAutoOpened] = useState(false);
+
+  useEffect(() => {
+    if (!hasAutoOpened) {
+      const timer = setTimeout(() => {
+        setIsOpen(true);
+        setHasAutoOpened(true);
+      }, delay);
+
+      return () => clearTimeout(timer);
+    }
+  }, [delay, hasAutoOpened]);
+
+  return {
+    isOpen,
+    openModal: () => setIsOpen(true),
+    closeModal: () => setIsOpen(false),
+  };
+};
+export { AutoPartsForm, AutoPartsModalForm, useAutoOpenModal };
+export type { FormDataState };

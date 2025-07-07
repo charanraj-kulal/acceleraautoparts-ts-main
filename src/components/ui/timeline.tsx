@@ -1,6 +1,8 @@
 "use client";
 import { useScroll, useTransform, motion } from "motion/react";
 import React, { useEffect, useRef, useState } from "react";
+import "@fontsource/montserrat/400.css";
+import "@fontsource/montserrat/700.css";
 
 interface TimelineEntry {
   title: string;
@@ -29,7 +31,7 @@ export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
 
   return (
     <div
-      className="w-full bg-white dark:bg-gray-900 font-sans md:px-10"
+      className="w-full bg-white  dark:bg-gray-900 font-[Montserrat] md:px-10"
       ref={containerRef}
     >
       <div className="max-w-7xl mx-auto py-20 px-4 md:px-8 lg:px-10">

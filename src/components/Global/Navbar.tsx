@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { AutoPartsModalForm } from "../Home/AutoPartsForm";
 
 interface NavbarProps {
   darkMode: boolean;
@@ -9,6 +10,8 @@ interface NavbarProps {
 const Navbar = ({ darkMode, setDarkMode }: NavbarProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+
   const dropdownRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
 
@@ -77,67 +80,202 @@ const Navbar = ({ darkMode, setDarkMode }: NavbarProps) => {
   };
 
   return (
-    <nav className="bg-white dark:bg-gray-900 shadow-lg border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          {/* Logo */}
-          <div className="flex items-center">
-            <div className="flex-shrink-0">
-              <div className="flex items-center">
-                <div className="w-10 h-10 bg-gradient-to-r from-orange-400 to-orange-600 rounded-full flex items-center justify-center">
-                  <span className="text-white font-bold text-xl">A</span>
+    <>
+      <nav className="bg-white dark:bg-gray-900 shadow-lg border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            {/* Logo */}
+            <div className="flex items-center">
+              <div className="flex-shrink-0">
+                <div className="flex items-center">
+                  <Link to="/">
+                    <img
+                      src={
+                        darkMode
+                          ? "/assets/logo/logo-dark.png"
+                          : "/assets/logo/logo-light.png"
+                      }
+                      alt="Accelera Auto Parts Logo"
+                      className="w-30 h-30 object-contain"
+                    />
+                  </Link>
                 </div>
-                <span className="ml-2 text-xl font-bold text-gray-900 dark:text-white">
-                  Accelera
-                  <span className="text-orange-500"> Auto Parts</span>
-                </span>
               </div>
             </div>
-          </div>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:block">
-            <div className="ml-10 flex items-baseline space-x-8">
-              <Link
-                to="/"
-                onClick={handleLinkClick}
-                className={getLinkClasses("/")}
-              >
-                HOME
-              </Link>
-              <Link
-                to="/aboutus"
-                onClick={handleLinkClick}
-                className={getLinkClasses("/aboutus")}
-              >
-                ABOUT US
-              </Link>
-              <Link
-                to="/contactus"
-                onClick={handleLinkClick}
-                className={getLinkClasses("/contactus")}
-              >
-                CONTACT
-              </Link>
-              <div
-                className="relative"
-                ref={dropdownRef}
-                onMouseEnter={handleDropdownMouseEnter}
-                onMouseLeave={handleDropdownMouseLeave}
-              >
-                <button
-                  onClick={handleDropdownClick}
-                  className={`px-3 py-2 text-sm font-medium transition-colors duration-200 flex items-center ${
-                    isUsedAutoPartsActive()
-                      ? "text-orange-500 hover:text-orange-600"
-                      : "text-gray-700 dark:text-gray-300 hover:text-orange-500"
-                  }`}
+            {/* Desktop Navigation */}
+            <div className="hidden md:block">
+              <div className="ml-10 flex items-baseline space-x-8">
+                <Link
+                  to="/"
+                  onClick={handleLinkClick}
+                  className={getLinkClasses("/")}
                 >
-                  USED AUTO PARTS
-                  <svg
-                    className={`ml-1 h-4 w-4 transform transition-transform duration-200 ${
-                      isDropdownOpen ? "rotate-180" : ""
+                  HOME
+                </Link>
+                <Link
+                  to="/aboutus"
+                  onClick={handleLinkClick}
+                  className={getLinkClasses("/aboutus")}
+                >
+                  ABOUT US
+                </Link>
+                <Link
+                  to="/contactus"
+                  onClick={handleLinkClick}
+                  className={getLinkClasses("/contactus")}
+                >
+                  CONTACT
+                </Link>
+                <div
+                  className="relative"
+                  ref={dropdownRef}
+                  onMouseEnter={handleDropdownMouseEnter}
+                  onMouseLeave={handleDropdownMouseLeave}
+                >
+                  <button
+                    onClick={handleDropdownClick}
+                    className={`px-3 py-2 text-sm font-medium transition-colors duration-200 flex items-center ${
+                      isUsedAutoPartsActive()
+                        ? "text-orange-500 hover:text-orange-600"
+                        : "text-gray-700 dark:text-gray-300 hover:text-orange-500"
                     }`}
+                  >
+                    USED AUTO PARTS
+                    <svg
+                      className={`ml-1 h-4 w-4 transform transition-transform duration-200 ${
+                        isDropdownOpen ? "rotate-180" : ""
+                      }`}
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M19 9l-7 7-7-7"
+                      />
+                    </svg>
+                  </button>
+                  <div
+                    className={`absolute left-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg transition-all duration-200 ${
+                      isDropdownOpen
+                        ? "opacity-100 visible"
+                        : "opacity-0 invisible"
+                    }`}
+                  >
+                    <div className="py-1">
+                      <Link
+                        to="/used-auto-parts/used-engines"
+                        onClick={handleLinkClick}
+                        className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-orange-50 dark:hover:bg-gray-700 hover:text-orange-500"
+                      >
+                        Used Engines
+                      </Link>
+                      <Link
+                        to="/used-auto-parts/used-transmissions"
+                        onClick={handleLinkClick}
+                        className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-orange-50 dark:hover:bg-gray-700 hover:text-orange-500"
+                      >
+                        Used Transmissions
+                      </Link>
+                      <Link
+                        to="/used-auto-parts/used-wheels"
+                        onClick={handleLinkClick}
+                        className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-orange-50 dark:hover:bg-gray-700 hover:text-orange-500"
+                      >
+                        Used Wheels
+                      </Link>
+                      <Link
+                        to="/used-auto-parts/drive-shaft"
+                        onClick={handleLinkClick}
+                        className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-orange-50 dark:hover:bg-gray-700 hover:text-orange-500"
+                      >
+                        Drive Shaft
+                      </Link>
+                      <Link
+                        to="/used-auto-parts/used-ac-compressor"
+                        onClick={handleLinkClick}
+                        className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-orange-50 dark:hover:bg-gray-700 hover:text-orange-500"
+                      >
+                        Used AC Compressor
+                      </Link>
+                      <Link
+                        to="/used-auto-parts/used-headlight"
+                        onClick={handleLinkClick}
+                        className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-orange-50 dark:hover:bg-gray-700 hover:text-orange-500"
+                      >
+                        Used Headlight
+                      </Link>
+                      <Link
+                        to="/used-auto-parts/used-transfer-case"
+                        onClick={handleLinkClick}
+                        className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-orange-50 dark:hover:bg-gray-700 hover:text-orange-500"
+                      >
+                        Used Transfer Case
+                      </Link>
+                      <Link
+                        to="/used-auto-parts/used-axle-assembly"
+                        onClick={handleLinkClick}
+                        className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-orange-50 dark:hover:bg-gray-700 hover:text-orange-500"
+                      >
+                        Used Axle Assembly
+                      </Link>
+                      <Link
+                        to="/used-auto-parts/used-radiator"
+                        onClick={handleLinkClick}
+                        className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-orange-50 dark:hover:bg-gray-700 hover:text-orange-500"
+                      >
+                        Used Radiator
+                      </Link>
+                      <Link
+                        to="/used-auto-parts/used-steering-column"
+                        onClick={handleLinkClick}
+                        className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-orange-50 dark:hover:bg-gray-700 hover:text-orange-500"
+                      >
+                        Used Steering Column
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Right side buttons */}
+            <div className="hidden md:flex items-center space-x-4">
+              <a
+                href="tel:+1201-984-5730"
+                className="text-gray-700 dark:text-gray-300 hover:text-orange-500 flex items-center"
+              >
+                <svg
+                  className="h-4 w-4 mr-1"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                  />
+                </svg>
+                +1 201-984-5730
+              </a>
+              <button
+                onClick={() => setModalOpen(true)}
+                className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-full text-sm font-medium transition-colors duration-200"
+              >
+                FREE QUOTE
+              </button>
+              <button
+                onClick={() => setDarkMode(!darkMode)}
+                className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors duration-200"
+              >
+                {darkMode ? (
+                  <svg
+                    className="h-5 w-5"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -146,125 +284,35 @@ const Navbar = ({ darkMode, setDarkMode }: NavbarProps) => {
                       strokeLinecap="round"
                       strokeLinejoin="round"
                       strokeWidth={2}
-                      d="M19 9l-7 7-7-7"
+                      d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
                     />
                   </svg>
-                </button>
-                <div
-                  className={`absolute left-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg transition-all duration-200 ${
-                    isDropdownOpen
-                      ? "opacity-100 visible"
-                      : "opacity-0 invisible"
-                  }`}
-                >
-                  <div className="py-1">
-                    <Link
-                      to="/used-auto-parts/used-engines"
-                      onClick={handleLinkClick}
-                      className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-orange-50 dark:hover:bg-gray-700 hover:text-orange-500"
-                    >
-                      Used Engines
-                    </Link>
-                    <Link
-                      to="/used-auto-parts/used-transmissions"
-                      onClick={handleLinkClick}
-                      className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-orange-50 dark:hover:bg-gray-700 hover:text-orange-500"
-                    >
-                      Used Transmissions
-                    </Link>
-                    <Link
-                      to="/used-auto-parts/used-wheels"
-                      onClick={handleLinkClick}
-                      className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-orange-50 dark:hover:bg-gray-700 hover:text-orange-500"
-                    >
-                      Used Wheels
-                    </Link>
-                    <Link
-                      to="/used-auto-parts/drive-shaft"
-                      onClick={handleLinkClick}
-                      className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-orange-50 dark:hover:bg-gray-700 hover:text-orange-500"
-                    >
-                      Drive Shaft
-                    </Link>
-                    <Link
-                      to="/used-auto-parts/used-ac-compressor"
-                      onClick={handleLinkClick}
-                      className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-orange-50 dark:hover:bg-gray-700 hover:text-orange-500"
-                    >
-                      Used AC Compressor
-                    </Link>
-                    <Link
-                      to="/used-auto-parts/used-headlight"
-                      onClick={handleLinkClick}
-                      className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-orange-50 dark:hover:bg-gray-700 hover:text-orange-500"
-                    >
-                      Used Headlight
-                    </Link>
-                    <Link
-                      to="/used-auto-parts/used-transfer-case"
-                      onClick={handleLinkClick}
-                      className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-orange-50 dark:hover:bg-gray-700 hover:text-orange-500"
-                    >
-                      Used Transfer Case
-                    </Link>
-                    <Link
-                      to="/used-auto-parts/used-axle-assembly"
-                      onClick={handleLinkClick}
-                      className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-orange-50 dark:hover:bg-gray-700 hover:text-orange-500"
-                    >
-                      Used Axle Assembly
-                    </Link>
-                    <Link
-                      to="/used-auto-parts/used-radiator"
-                      onClick={handleLinkClick}
-                      className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-orange-50 dark:hover:bg-gray-700 hover:text-orange-500"
-                    >
-                      Used Radiator
-                    </Link>
-                    <Link
-                      to="/used-auto-parts/used-steering-column"
-                      onClick={handleLinkClick}
-                      className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-orange-50 dark:hover:bg-gray-700 hover:text-orange-500"
-                    >
-                      Used Steering Column
-                    </Link>
-                  </div>
-                </div>
-              </div>
+                ) : (
+                  <svg
+                    className="h-5 w-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
+                    />
+                  </svg>
+                )}
+              </button>
             </div>
-          </div>
 
-          {/* Right side buttons */}
-          <div className="hidden md:flex items-center space-x-4">
-            <a
-              href="tel:+1201-984-5730"
-              className="text-gray-700 dark:text-gray-300 hover:text-orange-500 flex items-center"
-            >
-              <svg
-                className="h-4 w-4 mr-1"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
+            {/* Mobile menu button */}
+            <div className="md:hidden">
+              <button
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                className="text-gray-700 dark:text-gray-300 hover:text-orange-500 p-2"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-                />
-              </svg>
-              +1 201-984-5730
-            </a>
-            <button className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-full text-sm font-medium transition-colors duration-200">
-              FREE QUOTE
-            </button>
-            <button
-              onClick={() => setDarkMode(!darkMode)}
-              className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors duration-200"
-            >
-              {darkMode ? (
                 <svg
-                  className="h-5 w-5"
+                  className="h-6 w-6"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -273,108 +321,79 @@ const Navbar = ({ darkMode, setDarkMode }: NavbarProps) => {
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth={2}
-                    d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
+                    d="M4 6h16M4 12h16M4 18h16"
                   />
                 </svg>
-              ) : (
-                <svg
-                  className="h-5 w-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
-                  />
-                </svg>
-              )}
-            </button>
-          </div>
-
-          {/* Mobile menu button */}
-          <div className="md:hidden">
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="text-gray-700 dark:text-gray-300 hover:text-orange-500 p-2"
-            >
-              <svg
-                className="h-6 w-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              </svg>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Mobile menu */}
-      {isMenuOpen && (
-        <div className="md:hidden bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
-          <div className="px-2 pt-2 pb-3 space-y-1">
-            <Link
-              to="/"
-              onClick={handleLinkClick}
-              className={`block px-3 py-2 font-medium ${
-                isActiveLink("/")
-                  ? "text-orange-500"
-                  : "text-gray-700 dark:text-gray-300 hover:text-orange-500"
-              }`}
-            >
-              HOME
-            </Link>
-            <Link
-              to="/aboutus"
-              onClick={handleLinkClick}
-              className={`block px-3 py-2 ${
-                isActiveLink("/aboutus")
-                  ? "text-orange-500"
-                  : "text-gray-700 dark:text-gray-300 hover:text-orange-500"
-              }`}
-            >
-              ABOUT US
-            </Link>
-            <Link
-              to="/contactus"
-              onClick={handleLinkClick}
-              className={`block px-3 py-2 ${
-                isActiveLink("/contactus")
-                  ? "text-orange-500"
-                  : "text-gray-700 dark:text-gray-300 hover:text-orange-500"
-              }`}
-            >
-              CONTACT
-            </Link>
-            <Link
-              to="/used-auto-parts"
-              onClick={handleLinkClick}
-              className={`block px-3 py-2 ${
-                isUsedAutoPartsActive()
-                  ? "text-orange-500"
-                  : "text-gray-700 dark:text-gray-300 hover:text-orange-500"
-              }`}
-            >
-              USED AUTO PARTS
-            </Link>
-            <div className="px-3 py-2">
-              <button className="w-full bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-full text-sm font-medium">
-                FREE QUOTE
               </button>
             </div>
           </div>
         </div>
-      )}
-    </nav>
+
+        {/* Mobile menu */}
+        {isMenuOpen && (
+          <div className="md:hidden bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+            <div className="px-2 pt-2 pb-3 space-y-1">
+              <Link
+                to="/"
+                onClick={handleLinkClick}
+                className={`block px-3 py-2 font-medium ${
+                  isActiveLink("/")
+                    ? "text-orange-500"
+                    : "text-gray-700 dark:text-gray-300 hover:text-orange-500"
+                }`}
+              >
+                HOME
+              </Link>
+              <Link
+                to="/aboutus"
+                onClick={handleLinkClick}
+                className={`block px-3 py-2 ${
+                  isActiveLink("/aboutus")
+                    ? "text-orange-500"
+                    : "text-gray-700 dark:text-gray-300 hover:text-orange-500"
+                }`}
+              >
+                ABOUT US
+              </Link>
+              <Link
+                to="/contactus"
+                onClick={handleLinkClick}
+                className={`block px-3 py-2 ${
+                  isActiveLink("/contactus")
+                    ? "text-orange-500"
+                    : "text-gray-700 dark:text-gray-300 hover:text-orange-500"
+                }`}
+              >
+                CONTACT
+              </Link>
+              <Link
+                to="/used-auto-parts"
+                onClick={handleLinkClick}
+                className={`block px-3 py-2 ${
+                  isUsedAutoPartsActive()
+                    ? "text-orange-500"
+                    : "text-gray-700 dark:text-gray-300 hover:text-orange-500"
+                }`}
+              >
+                USED AUTO PARTS
+              </Link>
+              <div className="px-3 py-2">
+                <button
+                  onClick={() => setModalOpen(true)}
+                  className="w-full bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-full text-sm font-medium"
+                >
+                  FREE QUOTE
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+      </nav>
+      <AutoPartsModalForm
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+      />
+    </>
   );
 };
 

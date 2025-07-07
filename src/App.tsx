@@ -6,15 +6,31 @@ import Navbar from "./components/Global/Navbar";
 import Footer from "./components/Global/Footer";
 import GlobalOverlay from "./components/Global/GlobalOverlay";
 import PageLoader from "./components/Global/PageLoader";
-
+import UsedEngines from "./pages/UsedEngines";
+import UsedTransmissions from "./pages/UsedTransmissions";
+import UsedWheels from "./pages/UsedWheels";
+import DriveShaft from "./pages/DriveShaft";
+import UsedACCompressor from "./pages/UsedACCompressor";
+import UsedHeadlights from "./pages/UsedHeadlight";
+import UsedTransferCase from "./pages/UsedTransferCase";
+import UsedAxleAssembly from "./pages/UsedAxleAssembly";
+import UsedRadiator from "./pages/UsedRadiator";
+import UsedSteeringColumn from "./pages/UsedSteeringColumn";
+import {
+  AutoPartsModalForm,
+  useAutoOpenModal,
+} from "./components/Home/AutoPartsForm";
 import Home from "./pages/Home";
 import AboutUs from "./pages/AboutUs";
 import ContactUs from "./pages/ContactUs";
 
 function App() {
+  const { isOpen, closeModal } = useAutoOpenModal(10000);
+
   const [darkMode, setDarkMode] = useState(() =>
     document.documentElement.classList.contains("dark")
   );
+
   useEffect(() => {
     const lenis = new Lenis({
       duration: 1.2,
@@ -37,6 +53,7 @@ function App() {
       lenis.destroy();
     };
   }, []);
+
   useEffect(() => {
     if (darkMode) {
       document.documentElement.classList.add("dark");
@@ -44,6 +61,8 @@ function App() {
       document.documentElement.classList.remove("dark");
     }
   }, [darkMode]);
+
+  // No need for a separate form handler - the AutoPartsForm component handles submission internally
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 text-black dark:text-white transition-colors duration-300">
@@ -55,7 +74,40 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/aboutus" element={<AboutUs />} />
         <Route path="/contactus" element={<ContactUs />} />
+        <Route path="/used-auto-parts/used-engines" element={<UsedEngines />} />
+        <Route
+          path="/used-auto-parts/used-transmissions"
+          element={<UsedTransmissions />}
+        />
+        <Route path="/used-auto-parts/used-wheels" element={<UsedWheels />} />
+        <Route path="/used-auto-parts/drive-shaft" element={<DriveShaft />} />
+        <Route
+          path="/used-auto-parts/used-ac-compressor"
+          element={<UsedACCompressor />}
+        />
+        <Route
+          path="/used-auto-parts/used-headlight"
+          element={<UsedHeadlights />}
+        />
+        <Route
+          path="/used-auto-parts/used-transfer-case"
+          element={<UsedTransferCase />}
+        />
+        <Route
+          path="/used-auto-parts/used-axle-assembly"
+          element={<UsedAxleAssembly />}
+        />
+        <Route
+          path="/used-auto-parts/used-radiator"
+          element={<UsedRadiator />}
+        />
+        <Route
+          path="/used-auto-parts/used-steering-column"
+          element={<UsedSteeringColumn />}
+        />
       </Routes>
+
+      <AutoPartsModalForm isOpen={isOpen} onClose={closeModal} />
 
       <Footer />
     </div>

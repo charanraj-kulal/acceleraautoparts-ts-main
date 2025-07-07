@@ -11,8 +11,11 @@ import {
   DollarSign,
   ThumbsUp,
 } from "lucide-react";
-
+import { Link } from "react-router-dom";
+import { AutoPartsModalForm } from "./AutoPartsForm";
+import { useState } from "react";
 const AboutUs = () => {
+  const [modalOpen, setModalOpen] = useState(false);
   // Enhanced stats with better visual hierarchy
   const stats = [
     {
@@ -177,9 +180,14 @@ const AboutUs = () => {
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <button className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 rounded-lg font-semibold transition-all duration-200 transform hover:scale-105">
-              Explore More
+              <Link to="/aboutus" className="flex items-center justify-center">
+                Explore More
+              </Link>
             </button>
-            <button className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-gray-900 px-8 py-4 rounded-lg font-semibold transition-all duration-200">
+            <button
+              onClick={() => setModalOpen(true)}
+              className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-gray-900 px-8 py-4 rounded-lg font-semibold transition-all duration-200"
+            >
               Contact Our Team
             </button>
           </div>
@@ -438,13 +446,20 @@ const AboutUs = () => {
               <button className="bg-orange-500 hover:bg-orange-600 text-white px-10 py-4 rounded-lg font-semibold transition-all duration-200 transform hover:scale-105 shadow-lg">
                 Shop Parts Now
               </button>
-              <button className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-gray-900 px-10 py-4 rounded-lg font-semibold transition-all duration-200 shadow-lg">
+              <button
+                onClick={() => setModalOpen(true)}
+                className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-gray-900 px-10 py-4 rounded-lg font-semibold transition-all duration-200 shadow-lg"
+              >
                 Contact Our Experts
               </button>
             </div>
           </div>
         </div>
       </div>
+      <AutoPartsModalForm
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+      />
     </div>
   );
 };

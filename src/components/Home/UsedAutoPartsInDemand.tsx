@@ -7,7 +7,7 @@ import {
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
-
+import { AutoPartsModalForm } from "./AutoPartsForm";
 // Carousel Hook for smooth transitions
 const useCarousel = (itemsLength: number, autoPlayInterval = 4000) => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -175,6 +175,7 @@ type Part = {
 
 const UsedAutoPartsCarousel = () => {
   const [selectedPart, setSelectedPart] = useState<Part | null>(null);
+  const [modalOpen, setModalOpen] = useState(false);
 
   // Recommended image size: 400x300 pixels (aspect ratio 4:3) for optimal display in carousel and thumbnails.
   const parts: Part[] = [
@@ -285,132 +286,138 @@ const UsedAutoPartsCarousel = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-4">
-            Premium Used Auto Parts
-          </h1>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Quality tested parts with warranty - Find exactly what you need for
-            your vehicle
-          </p>
-        </div>
+    <>
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+        <div className="max-w-7xl mx-auto px-4 py-8">
+          {/* Header */}
+          <div className="text-center mb-12">
+            <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-4">
+              Premium Used Auto Parts
+            </h1>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              Quality tested parts with warranty - Find exactly what you need
+              for your vehicle
+            </p>
+          </div>
 
-        {/* Main Carousel */}
-        <CarouselProvider itemsLength={parts.length}>
-          <div className="relative mb-12">
-            <div className="relative overflow-hidden rounded-2xl shadow-2xl">
-              <CarouselContent className="h-96 bg-gradient-to-r from-gray-900 to-gray-800">
-                {parts.map((part) => (
-                  <CarouselItem key={part.id}>
-                    <div className="grid md:grid-cols-2 h-full">
-                      {/* Image Section */}
-                      <div className="relative overflow-hidden">
-                        <img
-                          src={part.image}
-                          alt={part.name}
-                          className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-                        <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full">
-                          <span className="text-sm font-medium text-gray-800">
-                            {part.condition}
-                          </span>
-                        </div>
-                      </div>
-
-                      {/* Content Section */}
-                      <div className="flex flex-col justify-center p-8 bg-white">
-                        <h2 className="text-3xl font-bold text-gray-900 mb-4">
-                          {part.name}
-                        </h2>
-
-                        {/* Rating */}
-                        <div className="flex items-center mb-4">
-                          <div className="flex">
-                            {[...Array(5)].map((_, i) => (
-                              <Star
-                                key={i}
-                                className={`w-5 h-5 ${
-                                  i < Math.floor(part.rating)
-                                    ? "text-yellow-400 fill-current"
-                                    : "text-gray-300"
-                                }`}
-                              />
-                            ))}
-                          </div>
-                          <span className="ml-2 text-gray-600 font-medium">
-                            {part.rating} out of 5
-                          </span>
-                        </div>
-
-                        <p className="text-gray-600 mb-6 leading-relaxed">
-                          {part.description}
-                        </p>
-
-                        <div className="flex items-center justify-between mb-6">
-                          <span className="text-3xl font-bold text-green-600">
-                            {part.price}
-                          </span>
-                          <div className="bg-green-50 px-3 py-1 rounded-full">
-                            <span className="text-green-700 font-medium">
-                              {part.warranty}
+          {/* Main Carousel */}
+          <CarouselProvider itemsLength={parts.length}>
+            <div className="relative mb-12">
+              <div className="relative overflow-hidden rounded-2xl shadow-2xl">
+                <CarouselContent className="h-96 bg-gradient-to-r from-gray-900 to-gray-800">
+                  {parts.map((part) => (
+                    <CarouselItem key={part.id}>
+                      <div className="grid md:grid-cols-2 h-full">
+                        {/* Image Section */}
+                        <div className="relative overflow-hidden">
+                          <img
+                            src={part.image}
+                            alt={part.name}
+                            className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+                          <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full">
+                            <span className="text-sm font-medium text-gray-800">
+                              {part.condition}
                             </span>
                           </div>
                         </div>
 
-                        <div className="flex gap-3">
-                          <button
-                            onClick={() => openDetail(part)}
-                            className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-xl font-semibold transition-all duration-200 flex items-center justify-center gap-2 hover:scale-105 transform"
-                          >
-                            <Info size={20} />
-                            More Details
-                          </button>
-                          <button
-                            onClick={() => openDetail(part)}
-                            className="flex-1 bg-green-600 hover:bg-green-700 text-white py-3 px-6 rounded-xl font-semibold transition-all duration-200 flex items-center justify-center gap-2 hover:scale-105 transform"
-                          >
-                            <MessageCircle size={20} />
-                            Contact Seller
-                          </button>
+                        {/* Content Section */}
+                        <div className="flex flex-col justify-center p-8 bg-white">
+                          <h2 className="text-3xl font-bold text-gray-900 mb-4">
+                            {part.name}
+                          </h2>
+
+                          {/* Rating */}
+                          <div className="flex items-center mb-4">
+                            <div className="flex">
+                              {[...Array(5)].map((_, i) => (
+                                <Star
+                                  key={i}
+                                  className={`w-5 h-5 ${
+                                    i < Math.floor(part.rating)
+                                      ? "text-yellow-400 fill-current"
+                                      : "text-gray-300"
+                                  }`}
+                                />
+                              ))}
+                            </div>
+                            <span className="ml-2 text-gray-600 font-medium">
+                              {part.rating} out of 5
+                            </span>
+                          </div>
+
+                          <p className="text-gray-600 mb-6 leading-relaxed">
+                            {part.description}
+                          </p>
+
+                          <div className="flex items-center justify-between mb-6">
+                            <span className="text-3xl font-bold text-green-600">
+                              {part.price}
+                            </span>
+                            <div className="bg-green-50 px-3 py-1 rounded-full">
+                              <span className="text-green-700 font-medium">
+                                {part.warranty}
+                              </span>
+                            </div>
+                          </div>
+
+                          <div className="flex gap-3">
+                            <button
+                              onClick={() => openDetail(part)}
+                              className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-xl font-semibold transition-all duration-200 flex items-center justify-center gap-2 hover:scale-105 transform"
+                            >
+                              <Info size={20} />
+                              More Details
+                            </button>
+                            <button
+                              onClick={() => setModalOpen(true)}
+                              className="flex-1 bg-green-600 hover:bg-green-700 text-white py-3 px-6 rounded-xl font-semibold transition-all duration-200 flex items-center justify-center gap-2 hover:scale-105 transform"
+                            >
+                              <MessageCircle size={20} />
+                              Contact Seller
+                            </button>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+              </div>
+
+              {/* Navigation */}
+              <CarouselPrevious />
+              <CarouselNext />
+
+              {/* Indicators */}
+              <CarouselIndicators itemsLength={parts.length} className="mt-8" />
             </div>
 
-            {/* Navigation */}
-            <CarouselPrevious />
-            <CarouselNext />
+            {/* Thumbnail Grid */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+              {parts.slice(0, 4).map((part, index) => (
+                <ThumbnailCard
+                  key={part.id}
+                  part={part}
+                  index={index}
+                  onClick={() => useCarouselContext().goToSlide(index)}
+                />
+              ))}
+            </div>
+          </CarouselProvider>
+        </div>
 
-            {/* Indicators */}
-            <CarouselIndicators itemsLength={parts.length} className="mt-8" />
-          </div>
-
-          {/* Thumbnail Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-            {parts.slice(0, 4).map((part, index) => (
-              <ThumbnailCard
-                key={part.id}
-                part={part}
-                index={index}
-                onClick={() => useCarouselContext().goToSlide(index)}
-              />
-            ))}
-          </div>
-        </CarouselProvider>
+        {/* Product Detail Modal */}
+        {selectedPart && (
+          <ProductDetailModal part={selectedPart} onClose={closeDetail} />
+        )}
       </div>
-
-      {/* Product Detail Modal */}
-      {selectedPart && (
-        <ProductDetailModal part={selectedPart} onClose={closeDetail} />
-      )}
-    </div>
+      <AutoPartsModalForm
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+      />
+    </>
   );
 };
 
@@ -453,6 +460,8 @@ const ProductDetailModal: React.FC<{
   part: Part;
   onClose: () => void;
 }> = ({ part, onClose }) => {
+  const [modalOpen, setModalOpen] = useState(false);
+
   return (
     <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
       <div className="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
@@ -539,7 +548,10 @@ const ProductDetailModal: React.FC<{
                 <span className="text-3xl font-bold text-green-600">
                   {part.price}
                 </span>
-                <button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-xl font-semibold transition-colors duration-200 flex items-center gap-2">
+                <button
+                  onClick={() => setModalOpen(true)}
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-xl font-semibold transition-colors duration-200 flex items-center gap-2"
+                >
                   <MessageCircle size={20} />
                   Contact Seller
                 </button>
@@ -548,6 +560,10 @@ const ProductDetailModal: React.FC<{
           </div>
         </div>
       </div>
+      <AutoPartsModalForm
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+      />
     </div>
   );
 };

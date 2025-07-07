@@ -1,5 +1,6 @@
 import { useState } from "react";
-import AutoPartsForm from "./AutoPartsForm";
+import { AutoPartsForm } from "./AutoPartsForm";
+import { Link } from "react-router-dom";
 
 const Hero = () => {
   const [, setIsVideoLoaded] = useState(false);
@@ -23,18 +24,6 @@ const Hero = () => {
   const handleVideoLoad = () => {
     setIsVideoLoaded(true);
     setVideoError(false);
-  };
-
-  const handleFormSubmit = (formData: any) => {
-    console.log("Form submitted:", formData);
-    // Handle form submission logic here
-  };
-
-  const scrollToContact = () => {
-    const contactSection = document.getElementById("contact");
-    if (contactSection) {
-      contactSection.scrollIntoView({ behavior: "smooth" });
-    }
   };
 
   return (
@@ -68,6 +57,11 @@ const Hero = () => {
           </video>
         )}
         <div className="absolute inset-0 bg-black opacity-40"></div>
+        {/* Bottom gradient overlay for smooth flow, dark/light mode compatible */}
+
+        <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-40 sm:h-56 md:h-64 bg-gradient-to-t from-gray-900 via-gray-800 to-transparent dark:from-gray-950 dark:via-gray-900 dark:to-transparent"></div>
+        {/* <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-40 sm:h-56 md:h-64 bg-gradient-to-t from-gray-50 dark:from-gray-900 via-gray-50/70 dark:via-gray-900/70 to-transparent"></div> */}
+        {/* <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-40 sm:h-56 md:h-64 bg-gradient-to-t from-gray-900 via-gray-800 to-transparent dark:from-gray-950 dark:via-gray-900 dark:to-transparent"></div> */}
       </div>
 
       {/* Content Overlay */}
@@ -81,18 +75,16 @@ const Hero = () => {
             <br className="hidden sm:block" />
             <span className="text-orange-500">The Best Deals</span>
           </h1>
-          <button
-            onClick={scrollToContact}
-            className="bg-orange-500 hover:bg-orange-600 text-white px-6 sm:px-8 py-2 sm:py-3 rounded-full text-base sm:text-lg font-semibold transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
-          >
-            CONTACT NOW
+          <button className="bg-orange-500 hover:bg-orange-600 text-white px-6 sm:px-8 py-2 sm:py-3 rounded-full text-base sm:text-lg font-semibold transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl">
+            <Link to="/contactus" className="flex items-center justify-center">
+              Contact Us
+            </Link>
           </button>
         </div>
 
         {/* Right Form */}
         <div className="flex-1 max-w-sm sm:max-w-md lg:max-w-lg xl:ml-8 w-full">
           <AutoPartsForm
-            onSubmit={handleFormSubmit}
             className="max-h-[70vh] sm:max-h-[75vh] lg:max-h-[80vh] overflow-y-auto"
             showTitle={true}
           />

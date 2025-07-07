@@ -16,12 +16,18 @@ import {
   Heart,
   Clock,
   ChevronRight,
-  PlayCircle,
   Quote,
 } from "lucide-react";
+import "@fontsource/montserrat/400.css";
+import "@fontsource/montserrat/700.css";
+import { AutoPartsModalForm } from "../components/Home/AutoPartsForm";
+import { useState } from "react";
+
 import { Timeline } from "../components/ui/timeline"; // Adjust the import path as necessary
 
 const AboutUs = () => {
+  const [modalOpen, setModalOpen] = useState(false);
+
   // Company timeline
   const data = [
     {
@@ -386,7 +392,7 @@ const AboutUs = () => {
   ];
 
   return (
-    <div className="bg-gray-50 dark:bg-gray-900 min-h-screen">
+    <div className="bg-gray-50 dark:bg-gray-900 font-[Montserrat] min-h-screen">
       {/* Hero Section with Video Background Effect */}
       {/* Hero Section with Video Background Effect */}
       <div className="relative bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 overflow-hidden">
@@ -406,12 +412,15 @@ const AboutUs = () => {
                 unbeatable prices.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 mb-12">
-                <button className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 md:px-8 md:py-4 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 flex items-center justify-center">
-                  <PlayCircle className="w-5 h-5 mr-2" />
-                  Watch Our Story
+                <button
+                  onClick={() => setModalOpen(true)}
+                  className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 md:px-8 md:py-4 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 flex items-center justify-center"
+                >
+                  <Quote className="w-5 h-5 mr-2" />
+                  Get Quote
                 </button>
                 <button className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-gray-900 px-6 py-3 md:px-8 md:py-4 rounded-lg font-semibold transition-all duration-300 flex items-center justify-center">
-                  Contact Our Team
+                  <Link to="/contactus">Contact Our Team</Link>
                   <ChevronRight className="w-5 h-5 ml-2" />
                 </button>
               </div>
@@ -493,7 +502,7 @@ const AboutUs = () => {
       </div> */}
 
       {/* Main Content Container */}
-      <div className="max-w-7xl pt-20 mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl pt-20 font-[Montserrat] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Story Section with Tabs */}
         <div className="mb-32">
           <div className="text-center mb-16">
@@ -992,21 +1001,28 @@ const AboutUs = () => {
               <div className="flex flex-col sm:flex-row justify-center gap-6">
                 <button className="bg-orange-500 hover:bg-orange-600 text-white px-12 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-2xl flex items-center justify-center">
                   <Truck className="w-5 h-5 mr-2" />
-                  <Link to="/parts">Shop Parts Now</Link>
+                  <Link to="/contactus">Shop Parts Now</Link>
                 </button>
                 <button className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-gray-900 px-12 py-4 rounded-xl font-semibold transition-all duration-300 shadow-2xl flex items-center justify-center">
                   <Phone className="w-5 h-5 mr-2" />
                   <Link to="/contactus">Contact Our Experts</Link>
                 </button>
-                <button className="bg-transparent border-2 border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white px-12 py-4 rounded-xl font-semibold transition-all duration-300 shadow-2xl flex items-center justify-center">
+                <button
+                  onClick={() => setModalOpen(true)}
+                  className="bg-transparent border-2 border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white px-12 py-4 rounded-xl font-semibold transition-all duration-300 shadow-2xl flex items-center justify-center"
+                >
                   <Quote className="w-5 h-5 mr-2" />
-                  <Link to="/quote">Get a Quote</Link>
+                  Get a Quote
                 </button>
               </div>
             </div>
           </div>
         </div>
       </div>
+      <AutoPartsModalForm
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+      />
     </div>
   );
 };
