@@ -1,8 +1,14 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { FaFacebook, FaWhatsapp, FaTwitter, FaLinkedin } from "react-icons/fa";
+
 const Footer = () => {
   // Set darkMode to false by default, or replace with your actual logic
   const [darkMode] = useState(false);
+
+  const handleLinkClick = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   return (
     <footer className="bg-gray-900 text-white">
@@ -20,7 +26,6 @@ const Footer = () => {
                 alt="Accelera Auto Parts Logo"
                 className="w-20 h-20 object-contain"
               />
-
               <span className="ml-2 text-lg font-bold">
                 Accelera <span className="text-orange-500">Auto Parts</span>
               </span>
@@ -31,25 +36,33 @@ const Footer = () => {
             </p>
             <div className="flex space-x-4">
               <a
-                href="#"
+                href="https://facebook.com"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-gray-400 hover:text-orange-500 transition-colors duration-200"
               >
                 <FaFacebook className="h-6 w-6" />
               </a>
               <a
-                href="#"
+                href="https://twitter.com"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-gray-400 hover:text-orange-500 transition-colors duration-200"
               >
                 <FaTwitter className="h-6 w-6" />
               </a>
               <a
-                href="#"
+                href="https://wa.me/12019845730"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-gray-400 hover:text-orange-500 transition-colors duration-200"
               >
                 <FaWhatsapp className="h-6 w-6" />
               </a>
               <a
-                href="#"
+                href="https://linkedin.com"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-gray-400 hover:text-orange-500 transition-colors duration-200"
               >
                 <FaLinkedin className="h-6 w-6" />
@@ -62,44 +75,52 @@ const Footer = () => {
             <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
             <ul className="space-y-2">
               <li>
-                <a
-                  href="#"
+                <Link
+                  to="/"
+                  onClick={handleLinkClick}
                   className="text-gray-400 hover:text-orange-500 transition-colors duration-200"
                 >
                   Home
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#"
+                <Link
+                  to="/aboutus"
+                  onClick={handleLinkClick}
                   className="text-gray-400 hover:text-orange-500 transition-colors duration-200"
                 >
                   About Us
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#"
+                <Link
+                  to="/used-auto-parts"
+                  onClick={handleLinkClick}
                   className="text-gray-400 hover:text-orange-500 transition-colors duration-200"
                 >
                   Used Auto Parts
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#"
+                <Link
+                  to="/contactus"
+                  onClick={handleLinkClick}
                   className="text-gray-400 hover:text-orange-500 transition-colors duration-200"
                 >
                   Contact
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#"
+                <button
+                  onClick={() => {
+                    // You can trigger the modal here if needed
+                    // Or scroll to a form section
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                  }}
                   className="text-gray-400 hover:text-orange-500 transition-colors duration-200"
                 >
                   Free Quote
-                </a>
+                </button>
               </li>
             </ul>
           </div>
@@ -109,47 +130,62 @@ const Footer = () => {
             <h3 className="text-lg font-semibold mb-4">Parts Categories</h3>
             <ul className="space-y-2">
               <li>
-                <a
-                  href="#"
+                <Link
+                  to="/used-auto-parts/used-engines"
+                  onClick={handleLinkClick}
                   className="text-gray-400 hover:text-orange-500 transition-colors duration-200"
                 >
-                  Engines
-                </a>
+                  Used Engines
+                </Link>
               </li>
               <li>
-                <a
-                  href="#"
+                <Link
+                  to="/used-auto-parts/used-transmissions"
+                  onClick={handleLinkClick}
                   className="text-gray-400 hover:text-orange-500 transition-colors duration-200"
                 >
-                  Transmissions
-                </a>
+                  Used Transmissions
+                </Link>
               </li>
               <li>
-                <a
-                  href="#"
+                <Link
+                  to="/used-auto-parts/used-wheels"
+                  onClick={handleLinkClick}
                   className="text-gray-400 hover:text-orange-500 transition-colors duration-200"
                 >
-                  Body Parts
-                </a>
+                  Used Wheels
+                </Link>
               </li>
               <li>
-                <a
-                  href="#"
+                <Link
+                  to="/used-auto-parts/used-ac-compressor"
+                  onClick={handleLinkClick}
                   className="text-gray-400 hover:text-orange-500 transition-colors duration-200"
                 >
-                  Electrical Components
-                </a>
+                  Used AC Compressor
+                </Link>
               </li>
               <li>
-                <a
-                  href="#"
+                <Link
+                  to="/used-auto-parts/used-headlight"
+                  onClick={handleLinkClick}
                   className="text-gray-400 hover:text-orange-500 transition-colors duration-200"
                 >
-                  Suspension Parts
-                </a>
+                  Used Headlight
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/used-auto-parts/used-radiator"
+                  onClick={handleLinkClick}
+                  className="text-gray-400 hover:text-orange-500 transition-colors duration-200"
+                >
+                  Used Radiator
+                </Link>
               </li>
             </ul>
           </div>
+
           {/* Contact Info */}
           <div>
             <h3 className="text-lg font-semibold mb-4">Contact Us</h3>
@@ -157,7 +193,7 @@ const Footer = () => {
               <li className="text-gray-400">
                 Phone:{" "}
                 <a
-                  href="tel:+1 201-984-5730"
+                  href="tel:+1201-984-5730"
                   className="hover:text-orange-500 transition-colors duration-200"
                 >
                   +1 201-984-5730
@@ -175,13 +211,13 @@ const Footer = () => {
               <li className="text-gray-400">
                 Address:{" "}
                 <span className="hover:text-orange-500 transition-colors duration-200">
-                  Supreme Auto Parts LLC, 1325 Main Street, Katy, TX, United
-                  States, Texas
+                  987 west side Ave jersey city new jersey 07306
                 </span>
               </li>
             </ul>
           </div>
         </div>
+
         <div className="mt-12 border-t border-gray-700 pt-6 text-center text-gray-500 text-sm">
           &copy; {new Date().getFullYear()} Accelera Auto Parts. All rights
           reserved.

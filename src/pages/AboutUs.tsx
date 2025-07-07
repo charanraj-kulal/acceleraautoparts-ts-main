@@ -1001,9 +1001,12 @@ const AboutUs = () => {
                 prices you'll love.
               </p>
               <div className="flex flex-col sm:flex-row justify-center gap-6">
-                <button className="bg-orange-500 hover:bg-orange-600 text-white px-12 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-2xl flex items-center justify-center">
+                <button
+                  onClick={() => setModalOpen(true)}
+                  className="bg-orange-500 hover:bg-orange-600 text-white px-12 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-2xl flex items-center justify-center"
+                >
                   <Truck className="w-5 h-5 mr-2" />
-                  <Link to="/contactus">Shop Parts Now</Link>
+                  Shop Parts Now
                 </button>
                 <button className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-gray-900 px-12 py-4 rounded-xl font-semibold transition-all duration-300 shadow-2xl flex items-center justify-center">
                   <Phone className="w-5 h-5 mr-2" />

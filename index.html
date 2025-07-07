@@ -5,10 +5,28 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Google Tag Manager -->
+    <script>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "dataLayer", "GTM-5CLPR3VR");
+    </script>
+    <!-- End Google Tag Manager -->
 
     <!-- Title & Favicon -->
     <title>Accelera Autoparts | Premium Auto Parts Online</title>
-    <link rel="icon" href="/src/assets/logo/logo.png" type="image/x-icon" />
+    <link
+      rel="icon"
+      href="/public/assets/logo/logo-dark.png"
+      type="image/x-icon"
+    />
 
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script>
@@ -21,7 +39,7 @@
     />
     <meta
       name="keywords"
-      content="autoparts, car parts, truck parts, engine, brake, accelera, vehicle accessories"
+      content="accelerate,autoparts, car parts, truck parts, engine, brake, accelera, vehicle accessories"
     />
     <meta name="author" content="Accelera Autoparts" />
 
@@ -66,6 +84,17 @@
   <body
     class="antialiased bg-white text-gray-800 dark:bg-gray-900 dark:text-white"
   >
+    <!-- Google Tag Manager (noscript) -->
+    <noscript
+      ><iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-5CLPR3VR"
+        height="0"
+        width="0"
+        style="display: none; visibility: hidden"
+      ></iframe
+    ></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

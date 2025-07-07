@@ -10,6 +10,7 @@ interface NavbarProps {
 const Navbar = ({ darkMode, setDarkMode }: NavbarProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isMobileDropdownOpen, setIsMobileDropdownOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
 
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -35,6 +36,7 @@ const Navbar = ({ darkMode, setDarkMode }: NavbarProps) => {
   // Close mobile menu when route changes
   useEffect(() => {
     setIsMenuOpen(false);
+    setIsMobileDropdownOpen(false);
   }, [location.pathname]);
 
   const handleDropdownClick = () => {
@@ -47,6 +49,10 @@ const Navbar = ({ darkMode, setDarkMode }: NavbarProps) => {
 
   const handleDropdownMouseLeave = () => {
     setIsDropdownOpen(false);
+  };
+
+  const handleMobileDropdownClick = () => {
+    setIsMobileDropdownOpen(!isMobileDropdownOpen);
   };
 
   // Helper function to determine if a link is active
@@ -306,7 +312,41 @@ const Navbar = ({ darkMode, setDarkMode }: NavbarProps) => {
             </div>
 
             {/* Mobile menu button */}
-            <div className="md:hidden">
+            <div className="md:hidden flex items-center space-x-2">
+              <button
+                onClick={() => setDarkMode(!darkMode)}
+                className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors duration-200"
+              >
+                {darkMode ? (
+                  <svg
+                    className="h-5 w-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
+                    />
+                  </svg>
+                ) : (
+                  <svg
+                    className="h-5 w-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
+                    />
+                  </svg>
+                )}
+              </button>
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                 className="text-gray-700 dark:text-gray-300 hover:text-orange-500 p-2"
@@ -347,7 +387,7 @@ const Navbar = ({ darkMode, setDarkMode }: NavbarProps) => {
               <Link
                 to="/aboutus"
                 onClick={handleLinkClick}
-                className={`block px-3 py-2 ${
+                className={`block px-3 py-2 font-medium ${
                   isActiveLink("/aboutus")
                     ? "text-orange-500"
                     : "text-gray-700 dark:text-gray-300 hover:text-orange-500"
@@ -358,7 +398,7 @@ const Navbar = ({ darkMode, setDarkMode }: NavbarProps) => {
               <Link
                 to="/contactus"
                 onClick={handleLinkClick}
-                className={`block px-3 py-2 ${
+                className={`block px-3 py-2 font-medium ${
                   isActiveLink("/contactus")
                     ? "text-orange-500"
                     : "text-gray-700 dark:text-gray-300 hover:text-orange-500"
@@ -366,17 +406,110 @@ const Navbar = ({ darkMode, setDarkMode }: NavbarProps) => {
               >
                 CONTACT
               </Link>
-              <Link
-                to="/used-auto-parts"
-                onClick={handleLinkClick}
-                className={`block px-3 py-2 ${
-                  isUsedAutoPartsActive()
-                    ? "text-orange-500"
-                    : "text-gray-700 dark:text-gray-300 hover:text-orange-500"
-                }`}
-              >
-                USED AUTO PARTS
-              </Link>
+
+              {/* Mobile dropdown for Used Auto Parts */}
+              <div>
+                <button
+                  onClick={handleMobileDropdownClick}
+                  className={`w-full flex items-center justify-between px-3 py-2 font-medium ${
+                    isUsedAutoPartsActive()
+                      ? "text-orange-500"
+                      : "text-gray-700 dark:text-gray-300 hover:text-orange-500"
+                  }`}
+                >
+                  USED AUTO PARTS
+                  <svg
+                    className={`h-4 w-4 transform transition-transform duration-200 ${
+                      isMobileDropdownOpen ? "rotate-180" : ""
+                    }`}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </button>
+                {isMobileDropdownOpen && (
+                  <div className="pl-4 space-y-1">
+                    <Link
+                      to="/used-auto-parts/used-engines"
+                      onClick={handleLinkClick}
+                      className="block px-3 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-orange-500"
+                    >
+                      Used Engines
+                    </Link>
+                    <Link
+                      to="/used-auto-parts/used-transmissions"
+                      onClick={handleLinkClick}
+                      className="block px-3 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-orange-500"
+                    >
+                      Used Transmissions
+                    </Link>
+                    <Link
+                      to="/used-auto-parts/used-wheels"
+                      onClick={handleLinkClick}
+                      className="block px-3 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-orange-500"
+                    >
+                      Used Wheels
+                    </Link>
+                    <Link
+                      to="/used-auto-parts/drive-shaft"
+                      onClick={handleLinkClick}
+                      className="block px-3 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-orange-500"
+                    >
+                      Drive Shaft
+                    </Link>
+                    <Link
+                      to="/used-auto-parts/used-ac-compressor"
+                      onClick={handleLinkClick}
+                      className="block px-3 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-orange-500"
+                    >
+                      Used AC Compressor
+                    </Link>
+                    <Link
+                      to="/used-auto-parts/used-headlight"
+                      onClick={handleLinkClick}
+                      className="block px-3 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-orange-500"
+                    >
+                      Used Headlight
+                    </Link>
+                    <Link
+                      to="/used-auto-parts/used-transfer-case"
+                      onClick={handleLinkClick}
+                      className="block px-3 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-orange-500"
+                    >
+                      Used Transfer Case
+                    </Link>
+                    <Link
+                      to="/used-auto-parts/used-axle-assembly"
+                      onClick={handleLinkClick}
+                      className="block px-3 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-orange-500"
+                    >
+                      Used Axle Assembly
+                    </Link>
+                    <Link
+                      to="/used-auto-parts/used-radiator"
+                      onClick={handleLinkClick}
+                      className="block px-3 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-orange-500"
+                    >
+                      Used Radiator
+                    </Link>
+                    <Link
+                      to="/used-auto-parts/used-steering-column"
+                      onClick={handleLinkClick}
+                      className="block px-3 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-orange-500"
+                    >
+                      Used Steering Column
+                    </Link>
+                  </div>
+                )}
+              </div>
+
               <div className="px-3 py-2">
                 <button
                   onClick={() => setModalOpen(true)}
@@ -384,6 +517,28 @@ const Navbar = ({ darkMode, setDarkMode }: NavbarProps) => {
                 >
                   FREE QUOTE
                 </button>
+              </div>
+
+              <div className="px-3 py-2">
+                <a
+                  href="tel:+1201-984-5730"
+                  className="w-full flex items-center justify-center bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:text-orange-500 px-4 py-2 rounded-full text-sm font-medium"
+                >
+                  <svg
+                    className="h-4 w-4 mr-1"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                    />
+                  </svg>
+                  +1 201-984-5730
+                </a>
               </div>
             </div>
           </div>

@@ -445,14 +445,14 @@ const AboutUs = () => {
               automotive needs.
             </p>
             <div className="flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-4 w-full">
-              <button className="w-full sm:w-auto bg-orange-500 hover:bg-orange-600 text-white px-6 sm:px-10 py-3 sm:py-4 rounded-lg font-semibold transition-all duration-200 transform hover:scale-105 shadow-lg text-base sm:text-lg">
-                Shop Parts Now
-              </button>
               <button
                 onClick={() => setModalOpen(true)}
-                className="w-full sm:w-auto bg-transparent border-2 border-white text-white hover:bg-white hover:text-gray-900 px-6 sm:px-10 py-3 sm:py-4 rounded-lg font-semibold transition-all duration-200 shadow-lg text-base sm:text-lg mt-2 sm:mt-0"
+                className="w-full sm:w-auto bg-orange-500 hover:bg-orange-600 text-white px-6 sm:px-10 py-3 sm:py-4 rounded-lg font-semibold transition-all duration-200 transform hover:scale-105 shadow-lg text-base sm:text-lg"
               >
-                Contact Our Experts
+                Shop Parts Now
+              </button>
+              <button className="w-full sm:w-auto bg-transparent border-2 border-white text-white hover:bg-white hover:text-gray-900 px-6 sm:px-10 py-3 sm:py-4 rounded-lg font-semibold transition-all duration-200 shadow-lg text-base sm:text-lg mt-2 sm:mt-0">
+                <Link to="/contactus">Contact Our Experts</Link>
               </button>
             </div>
           </div>

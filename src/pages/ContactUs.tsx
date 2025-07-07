@@ -186,11 +186,7 @@ const ContactUs = () => {
     {
       icon: MapPin,
       title: "Address",
-      details: [
-        "Supreme Auto Parts LLC",
-        "1325 Main Street, Katy, TX",
-        "United States, Texas",
-      ],
+      details: ["987 West Side Ave, Jersey City, New Jersey 07306"],
       color: "text-red-500",
     },
     {

@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
-import { FaArrowUp, FaPhone, FaWhatsapp } from "react-icons/fa";
+import { FaArrowUp, FaPhone, FaWhatsapp, FaQuoteLeft } from "react-icons/fa";
+import { AutoPartsModalForm } from "../Home/AutoPartsForm";
 
 const GlobalOverlay = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [, setIsMobile] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
 
   // Check scroll position and window size
   useEffect(() => {
@@ -56,7 +58,7 @@ const GlobalOverlay = () => {
   const whatsappLink = `https://wa.me/1234567890?text=${whatsappMessage}`;
 
   return (
-    <div className="fixed z-50 pointer-events-none">
+    <div className="fixed z-40 pointer-events-none">
       {/* Back to Top Button with Progress and Smooth Animation */}
       <button
         onClick={scrollToTop}
@@ -106,6 +108,15 @@ const GlobalOverlay = () => {
 
       {/* Sticky Contact Buttons - Desktop */}
       <div className="fixed z-40 hidden lg:flex flex-col gap-3 xl:gap-4 right-4 xl:right-6 top-1/2 -translate-y-1/2 pointer-events-auto">
+        {/* Quote Button */}
+        <button
+          onClick={() => setModalOpen(true)}
+          className="bg-purple-500 text-white rounded-full p-3 xl:p-4 shadow-lg hover:bg-purple-600 transition-all duration-300 transform hover:scale-110 flex items-center justify-center"
+          aria-label="Get a quote"
+        >
+          <FaQuoteLeft className="text-xl xl:text-2xl" />
+        </button>
+
         {/* WhatsApp Button */}
         <a
           href={whatsappLink}
@@ -130,6 +141,15 @@ const GlobalOverlay = () => {
       {/* Mobile Contact Buttons - Bottom Fixed */}
       <div className="fixed z-40 lg:hidden bottom-2 left-1/2 -translate-x-1/2 pointer-events-auto">
         <div className="flex gap-2 sm:gap-3 bg-white/90 backdrop-blur-sm rounded-full p-2 sm:p-3 shadow-lg border border-gray-200">
+          {/* Quote Button */}
+          <button
+            onClick={() => setModalOpen(true)}
+            className="bg-purple-500 text-white rounded-full p-2 sm:p-2.5 md:p-3 shadow-sm hover:bg-purple-600 transition-all duration-300 transform hover:scale-110 flex items-center justify-center"
+            aria-label="Get a quote"
+          >
+            <FaQuoteLeft className="text-lg sm:text-lg md:text-xl" />
+          </button>
+
           {/* WhatsApp Button */}
           <a
             href={whatsappLink}
@@ -138,7 +158,7 @@ const GlobalOverlay = () => {
             className="bg-green-500 text-white rounded-full p-2 sm:p-2.5 md:p-3 shadow-sm hover:bg-green-600 transition-all duration-300 transform hover:scale-110 flex items-center justify-center"
             aria-label="Contact via WhatsApp"
           >
-            <FaWhatsapp className="text-base sm:text-lg md:text-xl" />
+            <FaWhatsapp className="text-lg sm:text-lg md:text-xl" />
           </a>
 
           {/* Phone Button */}
@@ -147,10 +167,16 @@ const GlobalOverlay = () => {
             className="bg-blue-500 text-white rounded-full p-2 sm:p-2.5 md:p-3 shadow-sm hover:bg-blue-600 transition-all duration-300 transform hover:scale-110 flex items-center justify-center"
             aria-label="Call us"
           >
-            <FaPhone className="text-sm sm:text-base md:text-lg" />
+            <FaPhone className="text-lg sm:text-base md:text-lg" />
           </a>
         </div>
       </div>
+
+      {/* AutoParts Modal */}
+      <AutoPartsModalForm
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+      />
     </div>
   );
 };
