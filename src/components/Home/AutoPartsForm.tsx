@@ -512,19 +512,19 @@ const AutoPartsForm = ({
       className={`bg-white dark:bg-gray-800 font-[Montserrat] rounded-2xl shadow-2xl p-8 ${className}`}
     >
       {showTitle && (
-        <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+        <div className="text-center mb-4 lg:mb-6 sm:mb-8">
+          <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white mb-2">
             Get Your Free Quote
           </h2>
-          <p className="text-gray-600 dark:text-gray-300">
+          <p className="text-sm  text-gray-600 dark:text-gray-300">
             Submit your request and we'll get back to you with the best price
           </p>
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-3">
+      <form onSubmit={handleSubmit} className="space-y-2 sm:space-y-3">
         {/* Personal Info Row */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-2 gap-3 sm:gap-6">
           <div>
             <label className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 sm:mb-2">
               Your Name *
@@ -556,7 +556,7 @@ const AutoPartsForm = ({
         </div>
 
         {/* Contact & Year Row */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-2 gap-3 sm:gap-6">
           <div>
             <label className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 sm:mb-2">
               Your Phone *
@@ -593,7 +593,7 @@ const AutoPartsForm = ({
         </div>
 
         {/* Make & Model Row */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-2 gap-3 sm:gap-6">
           <div>
             <label className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 sm:mb-2">
               Make *
