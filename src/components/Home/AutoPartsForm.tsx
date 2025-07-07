@@ -57,7 +57,7 @@ const Modal = ({
         {/* Enhanced close button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 z-10 w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-700 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600 transition-all duration-200"
+          className="absolute cursor-pointer top-4 right-4 z-10 w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-700 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600 transition-all duration-200"
           aria-label="Close modal"
         >
           <svg
@@ -1105,7 +1105,7 @@ const AutoPartsForm = ({
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full bg-orange-500 hover:bg-orange-600 disabled:bg-gray-400 text-white py-3 sm:py-4 px-4 sm:px-6 rounded-lg font-semibold text-sm sm:text-lg transition-all duration-200 transform hover:scale-105 disabled:transform-none disabled:cursor-not-allowed shadow-lg hover:shadow-xl"
+          className="w-full cursor-pointer bg-orange-500 hover:bg-orange-600 disabled:bg-gray-400 text-white py-3 sm:py-4 px-4 sm:px-6 rounded-lg font-semibold text-sm sm:text-lg transition-all duration-200 transform hover:scale-105 disabled:transform-none disabled:cursor-not-allowed shadow-lg hover:shadow-xl"
         >
           {isSubmitting ? (
             <div className="flex items-center justify-center">

@@ -81,7 +81,7 @@ const Hero = () => {
         </div>
 
         {/* Right Form */}
-        <div className="flex-1 max-w-sm sm:max-w-md  lg:max-w-lg xl:ml-8 w-full mt-10 sm:mt-0">
+        <div className="flex-1 max-w-sm sm:max-w-md  lg:max-w-lg xl:ml-8 w-full mt-20 sm:mt-0">
           <AutoPartsForm
             className="max-h-[100vh] sm:max-h-[70vh] lg:max-h-[80vh] overflow-y-auto"
             showTitle={true}

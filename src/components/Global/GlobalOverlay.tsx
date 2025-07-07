@@ -51,11 +51,11 @@ const GlobalOverlay = () => {
   };
 
   // Replace with your actual phone number and WhatsApp link
-  const phoneNumber = "+1234567890";
+  const phoneNumber = "+1 201-984-5730";
   const whatsappMessage = encodeURIComponent(
     "Hello, I'm interested in your auto parts. Please provide more details."
   );
-  const whatsappLink = `https://wa.me/1234567890?text=${whatsappMessage}`;
+  const whatsappLink = `https://wa.me/${phoneNumber}?text=${whatsappMessage}`;
 
   return (
     <>
