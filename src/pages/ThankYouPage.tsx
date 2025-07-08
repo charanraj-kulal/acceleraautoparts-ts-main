@@ -4,9 +4,58 @@ import "@fontsource/montserrat/400.css";
 import "@fontsource/montserrat/700.css";
 
 const ThankYouPage = () => {
-  const [countdown, setCountdown] = useState(30); // Countdown in seconds`);
+  const [countdown, setCountdown] = useState(30); // Fixed: Removed backtick
   const navigate = useNavigate();
 
+  // Google Tag Manager script injection
+  useEffect(() => {
+    // GTM script
+    (function (
+      w: Window & { [key: string]: any },
+      d: Document,
+      s: string,
+      l: string,
+      i: string
+    ) {
+      w[l] = w[l] || [];
+      w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+      var f = d.getElementsByTagName(s)[0],
+        j = d.createElement(s) as HTMLScriptElement,
+        dl = l != "dataLayer" ? "&l=" + l : "";
+      j.async = true;
+      j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+      if (f.parentNode) {
+        f.parentNode.insertBefore(j, f);
+      }
+    })(
+      window as Window & { [key: string]: any },
+      document,
+      "script",
+      "dataLayer",
+      "GTM-5CLPR3VR"
+    );
+
+    // GTM noscript fallback - create and append iframe
+    const noscriptIframe = document.createElement("iframe");
+    noscriptIframe.src =
+      "https://www.googletagmanager.com/ns.html?id=GTM-5CLPR3VR";
+    noscriptIframe.height = "0";
+    noscriptIframe.width = "0";
+    noscriptIframe.style.display = "none";
+    noscriptIframe.style.visibility = "hidden";
+
+    // Append to body (or you can append to a specific container)
+    document.body.appendChild(noscriptIframe);
+
+    // Cleanup function to remove the iframe when component unmounts
+    return () => {
+      if (document.body.contains(noscriptIframe)) {
+        document.body.removeChild(noscriptIframe);
+      }
+    };
+  }, []);
+
+  // Countdown timer
   useEffect(() => {
     const timer = setInterval(() => {
       setCountdown((prev) => {
