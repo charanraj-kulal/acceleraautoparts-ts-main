@@ -1,9 +1,10 @@
 import { useState, useEffect, type ChangeEvent, type FormEvent } from "react";
-import emailjs from "emailjs-com";
+
 import "@fontsource/montserrat/400.css";
 import "@fontsource/montserrat/700.css";
 import React from "react";
-
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 type FormDataState = {
   name: string;
   email: string;
@@ -101,7 +102,6 @@ const AutoPartsForm = ({
     model: "",
     partType: "",
   });
-  emailjs.init("u0jB2jWwkIFUZMmwc");
 
   const [availableModels, setAvailableModels] = useState<string[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -861,6 +861,10 @@ const AutoPartsForm = ({
     "Fuel System",
     "Air Conditioning",
   ];
+  const API_URL =
+    process.env.NODE_ENV === "production"
+      ? "https://acceleraautoparts-backend.vercel.app"
+      : "http://localhost:5000";
 
   useEffect(() => {
     if (
@@ -909,24 +913,31 @@ const AutoPartsForm = ({
     }
 
     try {
-      await emailjs.send(
-        "service_b304oc2", // serviceId
-        "template_cxw8wr8", // templateId
-        {
-          to_name: "Auto Parts Team",
-          from_name: formData.name,
-          from_email: formData.email,
+      const response = await fetch(`${API_URL}/api/send-email`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
           phone: formData.phone,
           year: formData.year,
           make: formData.make,
           model: formData.model,
-          part_type: formData.partType,
-          reply_to: formData.email,
-        }
+          partType: formData.partType,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.message || "Failed to send email");
+      }
+
+      toast.success(
+        "Your request has been submitted successfully! Check your email for confirmation."
       );
-
-      alert("Your request has been submitted successfully!");
-
       // Reset form
       setFormData({
         name: "",
@@ -947,12 +958,13 @@ const AutoPartsForm = ({
       }
     } catch (error) {
       console.error("Error submitting form:", error);
-      alert("There was an error submitting your request. Please try again.");
+      toast.error(
+        "There was an error submitting your request. Please try again."
+      );
     } finally {
       setIsSubmitting(false);
     }
   };
-
   return (
     <div
       className={`bg-white dark:bg-gray-800 font-[Montserrat] rounded-2xl shadow-2xl p-8 ${className}`}
