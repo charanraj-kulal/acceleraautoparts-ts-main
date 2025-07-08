@@ -1,4 +1,5 @@
 import { useState, useEffect, type ChangeEvent, type FormEvent } from "react";
+import { useNavigate } from "react-router-dom";
 
 import "@fontsource/montserrat/400.css";
 import "@fontsource/montserrat/700.css";
@@ -105,6 +106,7 @@ const AutoPartsForm = ({
 
   const [availableModels, setAvailableModels] = useState<string[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const navigate = useNavigate();
 
   // Car data from CSV
   const carData: Record<string, string[]> = {
@@ -950,6 +952,7 @@ const AutoPartsForm = ({
 
       if (onSubmit) onSubmit(formData);
       if (onSuccess) onSuccess();
+      navigate("/thankyou");
     } catch (error) {
       console.error("Error submitting form:", error);
       toast.error(

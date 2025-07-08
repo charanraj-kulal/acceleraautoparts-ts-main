@@ -1,6 +1,6 @@
 // src/App.tsx
-import { useState, useEffect } from "react";
-import { Routes, Route } from "react-router-dom";
+import { useState, useEffect, useRef } from "react";
+import { Routes, Route, useLocation } from "react-router-dom";
 import Lenis from "@studio-freight/lenis";
 import Navbar from "./components/Global/Navbar";
 import Footer from "./components/Global/Footer";
@@ -16,6 +16,7 @@ import UsedTransferCase from "./pages/UsedTransferCase";
 import UsedAxleAssembly from "./pages/UsedAxleAssembly";
 import UsedRadiator from "./pages/UsedRadiator";
 import UsedSteeringColumn from "./pages/UsedSteeringColumn";
+import ThankYouPage from "./pages/ThankYouPage";
 import {
   AutoPartsModalForm,
   useAutoOpenModal,
@@ -26,10 +27,19 @@ import ContactUs from "./pages/ContactUs";
 
 function App() {
   const { isOpen, closeModal } = useAutoOpenModal(10000);
+  const location = useLocation();
+  const lenisRef = useRef<Lenis | null>(null);
 
   const [darkMode, setDarkMode] = useState(() =>
     document.documentElement.classList.contains("dark")
   );
+
+  // Reset scroll position when route changes
+  useEffect(() => {
+    if (lenisRef.current) {
+      lenisRef.current.scrollTo(0, { immediate: true });
+    }
+  }, [location.pathname]);
 
   useEffect(() => {
     const lenis = new Lenis({
@@ -41,6 +51,8 @@ function App() {
       touchMultiplier: 2,
     });
 
+    lenisRef.current = lenis;
+
     function raf(time: number) {
       lenis.raf(time);
       requestAnimationFrame(raf);
@@ -51,6 +63,7 @@ function App() {
     // Cleanup
     return () => {
       lenis.destroy();
+      lenisRef.current = null;
     };
   }, []);
 
@@ -61,8 +74,6 @@ function App() {
       document.documentElement.classList.remove("dark");
     }
   }, [darkMode]);
-
-  // No need for a separate form handler - the AutoPartsForm component handles submission internally
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 text-black dark:text-white transition-colors duration-300">
@@ -105,6 +116,7 @@ function App() {
           path="/used-auto-parts/used-steering-column"
           element={<UsedSteeringColumn />}
         />
+        <Route path="/thankyou" element={<ThankYouPage />} />
       </Routes>
 
       <AutoPartsModalForm isOpen={isOpen} onClose={closeModal} />
