@@ -75,7 +75,9 @@ app.get("/", (req, res) => {
 app.get("/api/health", (req, res) => {
   res.json({ status: "OK", message: "Server is running" });
 });
-
+app.get("/api/submissionhit", (req, res) => {
+  res.json({ status: "OK", message: "Submission hit endpoint" });
+});
 // Email endpoint
 app.post("/api/send-email", async (req, res) => {
   const { name, email, phone, year, make, model, partType } = req.body;

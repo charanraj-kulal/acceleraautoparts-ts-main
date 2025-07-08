@@ -913,20 +913,13 @@ const AutoPartsForm = ({
     }
 
     try {
+      // First API call — send email
       const response = await fetch(`${API_URL}/api/send-email`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          phone: formData.phone,
-          year: formData.year,
-          make: formData.make,
-          model: formData.model,
-          partType: formData.partType,
-        }),
+        body: JSON.stringify(formData),
       });
 
       const result = await response.json();
@@ -935,9 +928,15 @@ const AutoPartsForm = ({
         throw new Error(result.message || "Failed to send email");
       }
 
+      // ✅ Optional second API call — submission hit tracker
+      await fetch(`${API_URL}/api/submissionhit`, {
+        method: "GET",
+      });
+
       toast.success(
         "Your request has been submitted successfully! Check your email for confirmation."
       );
+
       // Reset form
       setFormData({
         name: "",
@@ -949,13 +948,8 @@ const AutoPartsForm = ({
         partType: "",
       });
 
-      if (onSubmit) {
-        onSubmit(formData);
-      }
-
-      if (onSuccess) {
-        onSuccess();
-      }
+      if (onSubmit) onSubmit(formData);
+      if (onSuccess) onSuccess();
     } catch (error) {
       console.error("Error submitting form:", error);
       toast.error(
@@ -965,6 +959,7 @@ const AutoPartsForm = ({
       setIsSubmitting(false);
     }
   };
+
   return (
     <div
       className={`bg-white dark:bg-gray-800 font-[Montserrat] rounded-2xl shadow-2xl p-8 ${className}`}
