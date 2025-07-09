@@ -1,54 +1,9 @@
-import { useState, useEffect } from "react";
-import { FaArrowUp, FaPhone, FaFileInvoice } from "react-icons/fa";
+import { useState } from "react";
+import { FaPhone, FaFileInvoice } from "react-icons/fa";
 import { AutoPartsModalForm } from "../Home/AutoPartsForm";
 
 const GlobalOverlay = () => {
-  const [isVisible, setIsVisible] = useState(false);
-  const [scrollProgress, setScrollProgress] = useState(0);
-  const [, setIsMobile] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
-
-  // Check scroll position and window size
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollTop =
-        window.pageYOffset || document.documentElement.scrollTop;
-      const windowHeight = window.innerHeight;
-      const docHeight = document.documentElement.scrollHeight;
-
-      // Calculate scroll progress (0-100)
-      const progress = (scrollTop / (docHeight - windowHeight)) * 100;
-      setScrollProgress(progress);
-
-      // Show back-to-top button after scrolling down 300px
-      setIsVisible(scrollTop > 300);
-    };
-
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-
-    // Initial check
-    handleScroll();
-    handleResize();
-
-    // Add event listeners
-    window.addEventListener("scroll", handleScroll);
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
-  // Smooth scroll to top
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  };
 
   // Replace with your actual phone number and WhatsApp link
   const phoneNumber = "+1 201-984-5730";
@@ -60,53 +15,6 @@ const GlobalOverlay = () => {
   return (
     <>
       <div className="fixed z-50 pointer-events-none">
-        {/* Back to Top Button with Progress and Smooth Animation */}
-        <button
-          onClick={scrollToTop}
-          className={`fixed right-2 bottom-20 sm:right-3 sm:bottom-22 md:right-4 md:bottom-24 lg:right-6 lg:bottom-6 bg-orange-500 text-white rounded-full shadow-lg hover:bg-orange-600 transition-all duration-500 ease-out transform hover:scale-110 pointer-events-auto p-2 sm:p-2.5 md:p-3 lg:p-4 ${
-            isVisible
-              ? "translate-y-0 opacity-100 scale-100"
-              : "translate-y-16 opacity-0 scale-75"
-          }`}
-          style={{
-            transition:
-              "transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55), opacity 0.5s ease-out",
-          }}
-          aria-label="Back to top"
-        >
-          <div className="relative w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 flex items-center justify-center">
-            {/* Progress circle */}
-            <svg
-              className="absolute w-full h-full -rotate-90"
-              viewBox="0 0 100 100"
-            >
-              <circle
-                cx="50"
-                cy="50"
-                r="45"
-                fill="none"
-                stroke="rgba(255,255,255,0.3)"
-                strokeWidth="5"
-              />
-              <circle
-                cx="50"
-                cy="50"
-                r="45"
-                fill="none"
-                stroke="white"
-                strokeWidth="5"
-                strokeDasharray="283"
-                strokeDashoffset={283 - (283 * scrollProgress) / 100}
-                strokeLinecap="round"
-                style={{
-                  transition: "stroke-dashoffset 0.3s ease-out",
-                }}
-              />
-            </svg>
-            <FaArrowUp className="relative text-sm sm:text-base md:text-lg lg:text-xl transform transition-transform duration-300 group-hover:translate-y-[-2px]" />
-          </div>
-        </button>
-
         {/* Sticky Contact Buttons - Desktop */}
         <div className="fixed z-40 hidden lg:flex flex-col gap-3 xl:gap-4 right-4 xl:right-6 top-1/2 -translate-y-1/2 pointer-events-auto">
           {/* Quote Button */}
