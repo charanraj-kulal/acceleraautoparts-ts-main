@@ -25,6 +25,7 @@ import {
 import Home from "./pages/Home";
 import AboutUs from "./pages/AboutUs";
 import ContactUs from "./pages/ContactUs";
+import UsedAutoPartsPage from "./pages/UsedAutoPartsPage";
 
 function App() {
   const { isOpen, closeModal } = useAutoOpenModal(10000);
@@ -117,6 +118,7 @@ function App() {
           path="/used-auto-parts/used-steering-column"
           element={<UsedSteeringColumn />}
         />
+        <Route path="/used-auto-parts" element={<UsedAutoPartsPage />} />
         <Route path="/thankyou" element={<ThankYouPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>

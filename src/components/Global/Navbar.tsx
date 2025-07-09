@@ -39,6 +39,7 @@ const Navbar = ({ darkMode, setDarkMode }: NavbarProps) => {
     setIsMobileDropdownOpen(false);
   }, [location.pathname]);
 
+  // Desktop dropdown handlers
   const handleDropdownClick = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
@@ -51,6 +52,7 @@ const Navbar = ({ darkMode, setDarkMode }: NavbarProps) => {
     setIsDropdownOpen(false);
   };
 
+  // Mobile dropdown handlers
   const handleMobileDropdownClick = () => {
     setIsMobileDropdownOpen(!isMobileDropdownOpen);
   };
@@ -80,9 +82,11 @@ const Navbar = ({ darkMode, setDarkMode }: NavbarProps) => {
     }`;
   };
 
-  // Handle link clicks - scroll to top
+  // Handle link clicks - scroll to top and close dropdowns
   const handleLinkClick = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
+    setIsDropdownOpen(false);
+    setIsMobileDropdownOpen(false);
   };
 
   return (
@@ -165,80 +169,83 @@ const Navbar = ({ darkMode, setDarkMode }: NavbarProps) => {
                     </svg>
                   </button>
                   <div
-                    className={`absolute left-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg transition-all duration-200 ${
+                    className={`absolute left-0 mt-0 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg border border-gray-200 dark:border-gray-600 transition-all duration-200 ${
                       isDropdownOpen
-                        ? "opacity-100 visible"
-                        : "opacity-0 invisible"
+                        ? "opacity-100 visible translate-y-0"
+                        : "opacity-0 invisible -translate-y-2"
                     }`}
+                    style={{
+                      top: "calc(100% + 1px)", // Ensures the dropdown is positioned right below the button
+                    }}
                   >
-                    <div className="py-1">
+                    <div className="py-2">
                       <Link
                         to="/used-auto-parts/used-engines"
                         onClick={handleLinkClick}
-                        className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-orange-50 dark:hover:bg-gray-700 hover:text-orange-500"
+                        className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-orange-50 dark:hover:bg-gray-700 hover:text-orange-500 transition-colors duration-150"
                       >
                         Used Engines
                       </Link>
                       <Link
                         to="/used-auto-parts/used-transmissions"
                         onClick={handleLinkClick}
-                        className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-orange-50 dark:hover:bg-gray-700 hover:text-orange-500"
+                        className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-orange-50 dark:hover:bg-gray-700 hover:text-orange-500 transition-colors duration-150"
                       >
                         Used Transmissions
                       </Link>
                       <Link
                         to="/used-auto-parts/used-wheels"
                         onClick={handleLinkClick}
-                        className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-orange-50 dark:hover:bg-gray-700 hover:text-orange-500"
+                        className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-orange-50 dark:hover:bg-gray-700 hover:text-orange-500 transition-colors duration-150"
                       >
                         Used Wheels
                       </Link>
                       <Link
                         to="/used-auto-parts/drive-shaft"
                         onClick={handleLinkClick}
-                        className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-orange-50 dark:hover:bg-gray-700 hover:text-orange-500"
+                        className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-orange-50 dark:hover:bg-gray-700 hover:text-orange-500 transition-colors duration-150"
                       >
                         Drive Shaft
                       </Link>
                       <Link
                         to="/used-auto-parts/used-ac-compressor"
                         onClick={handleLinkClick}
-                        className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-orange-50 dark:hover:bg-gray-700 hover:text-orange-500"
+                        className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-orange-50 dark:hover:bg-gray-700 hover:text-orange-500 transition-colors duration-150"
                       >
                         Used AC Compressor
                       </Link>
                       <Link
                         to="/used-auto-parts/used-headlight"
                         onClick={handleLinkClick}
-                        className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-orange-50 dark:hover:bg-gray-700 hover:text-orange-500"
+                        className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-orange-50 dark:hover:bg-gray-700 hover:text-orange-500 transition-colors duration-150"
                       >
                         Used Headlight
                       </Link>
                       <Link
                         to="/used-auto-parts/used-transfer-case"
                         onClick={handleLinkClick}
-                        className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-orange-50 dark:hover:bg-gray-700 hover:text-orange-500"
+                        className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-orange-50 dark:hover:bg-gray-700 hover:text-orange-500 transition-colors duration-150"
                       >
                         Used Transfer Case
                       </Link>
                       <Link
                         to="/used-auto-parts/used-axle-assembly"
                         onClick={handleLinkClick}
-                        className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-orange-50 dark:hover:bg-gray-700 hover:text-orange-500"
+                        className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-orange-50 dark:hover:bg-gray-700 hover:text-orange-500 transition-colors duration-150"
                       >
                         Used Axle Assembly
                       </Link>
                       <Link
                         to="/used-auto-parts/used-radiator"
                         onClick={handleLinkClick}
-                        className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-orange-50 dark:hover:bg-gray-700 hover:text-orange-500"
+                        className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-orange-50 dark:hover:bg-gray-700 hover:text-orange-500 transition-colors duration-150"
                       >
                         Used Radiator
                       </Link>
                       <Link
                         to="/used-auto-parts/used-steering-column"
                         onClick={handleLinkClick}
-                        className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-orange-50 dark:hover:bg-gray-700 hover:text-orange-500"
+                        className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-orange-50 dark:hover:bg-gray-700 hover:text-orange-500 transition-colors duration-150"
                       >
                         Used Steering Column
                       </Link>
@@ -252,7 +259,7 @@ const Navbar = ({ darkMode, setDarkMode }: NavbarProps) => {
             <div className="hidden md:flex items-center space-x-4">
               <a
                 href="tel:+1201-984-5730"
-                className="text-gray-700 dark:text-gray-300 hover:text-orange-500 flex items-center"
+                className="text-gray-700 dark:text-gray-300 hover:text-orange-500 flex items-center transition-colors duration-200"
               >
                 <svg
                   className="h-4 w-4 mr-1"
@@ -376,7 +383,7 @@ const Navbar = ({ darkMode, setDarkMode }: NavbarProps) => {
               <Link
                 to="/"
                 onClick={handleLinkClick}
-                className={`block px-3 py-2 font-medium ${
+                className={`block px-3 py-2 font-medium transition-colors duration-200 ${
                   isActiveLink("/")
                     ? "text-orange-500"
                     : "text-gray-700 dark:text-gray-300 hover:text-orange-500"
@@ -387,7 +394,7 @@ const Navbar = ({ darkMode, setDarkMode }: NavbarProps) => {
               <Link
                 to="/aboutus"
                 onClick={handleLinkClick}
-                className={`block px-3 py-2 font-medium ${
+                className={`block px-3 py-2 font-medium transition-colors duration-200 ${
                   isActiveLink("/aboutus")
                     ? "text-orange-500"
                     : "text-gray-700 dark:text-gray-300 hover:text-orange-500"
@@ -398,7 +405,7 @@ const Navbar = ({ darkMode, setDarkMode }: NavbarProps) => {
               <Link
                 to="/contact"
                 onClick={handleLinkClick}
-                className={`block px-3 py-2 font-medium ${
+                className={`block px-3 py-2 font-medium transition-colors duration-200 ${
                   isActiveLink("/contact")
                     ? "text-orange-500"
                     : "text-gray-700 dark:text-gray-300 hover:text-orange-500"
@@ -411,7 +418,7 @@ const Navbar = ({ darkMode, setDarkMode }: NavbarProps) => {
               <div>
                 <button
                   onClick={handleMobileDropdownClick}
-                  className={`w-full flex items-center justify-between px-3 py-2 font-medium ${
+                  className={`w-full flex items-center justify-between px-3 py-2 font-medium transition-colors duration-200 ${
                     isUsedAutoPartsActive()
                       ? "text-orange-500"
                       : "text-gray-700 dark:text-gray-300 hover:text-orange-500"
@@ -434,86 +441,92 @@ const Navbar = ({ darkMode, setDarkMode }: NavbarProps) => {
                     />
                   </svg>
                 </button>
-                {isMobileDropdownOpen && (
-                  <div className="pl-4 space-y-1">
+                <div
+                  className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                    isMobileDropdownOpen
+                      ? "max-h-96 opacity-100"
+                      : "max-h-0 opacity-0"
+                  }`}
+                >
+                  <div className="pl-4 space-y-1 py-2">
                     <Link
                       to="/used-auto-parts/used-engines"
                       onClick={handleLinkClick}
-                      className="block px-3 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-orange-500"
+                      className="block px-3 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-orange-500 transition-colors duration-150"
                     >
                       Used Engines
                     </Link>
                     <Link
                       to="/used-auto-parts/used-transmissions"
                       onClick={handleLinkClick}
-                      className="block px-3 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-orange-500"
+                      className="block px-3 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-orange-500 transition-colors duration-150"
                     >
                       Used Transmissions
                     </Link>
                     <Link
                       to="/used-auto-parts/used-wheels"
                       onClick={handleLinkClick}
-                      className="block px-3 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-orange-500"
+                      className="block px-3 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-orange-500 transition-colors duration-150"
                     >
                       Used Wheels
                     </Link>
                     <Link
                       to="/used-auto-parts/drive-shaft"
                       onClick={handleLinkClick}
-                      className="block px-3 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-orange-500"
+                      className="block px-3 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-orange-500 transition-colors duration-150"
                     >
                       Drive Shaft
                     </Link>
                     <Link
                       to="/used-auto-parts/used-ac-compressor"
                       onClick={handleLinkClick}
-                      className="block px-3 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-orange-500"
+                      className="block px-3 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-orange-500 transition-colors duration-150"
                     >
                       Used AC Compressor
                     </Link>
                     <Link
                       to="/used-auto-parts/used-headlight"
                       onClick={handleLinkClick}
-                      className="block px-3 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-orange-500"
+                      className="block px-3 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-orange-500 transition-colors duration-150"
                     >
                       Used Headlight
                     </Link>
                     <Link
                       to="/used-auto-parts/used-transfer-case"
                       onClick={handleLinkClick}
-                      className="block px-3 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-orange-500"
+                      className="block px-3 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-orange-500 transition-colors duration-150"
                     >
                       Used Transfer Case
                     </Link>
                     <Link
                       to="/used-auto-parts/used-axle-assembly"
                       onClick={handleLinkClick}
-                      className="block px-3 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-orange-500"
+                      className="block px-3 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-orange-500 transition-colors duration-150"
                     >
                       Used Axle Assembly
                     </Link>
                     <Link
                       to="/used-auto-parts/used-radiator"
                       onClick={handleLinkClick}
-                      className="block px-3 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-orange-500"
+                      className="block px-3 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-orange-500 transition-colors duration-150"
                     >
                       Used Radiator
                     </Link>
                     <Link
                       to="/used-auto-parts/used-steering-column"
                       onClick={handleLinkClick}
-                      className="block px-3 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-orange-500"
+                      className="block px-3 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-orange-500 transition-colors duration-150"
                     >
                       Used Steering Column
                     </Link>
                   </div>
-                )}
+                </div>
               </div>
 
               <div className="px-3 py-2">
                 <button
                   onClick={() => setModalOpen(true)}
-                  className="w-full bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-full text-sm font-medium"
+                  className="w-full bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200"
                 >
                   FREE QUOTE
                 </button>
@@ -522,7 +535,7 @@ const Navbar = ({ darkMode, setDarkMode }: NavbarProps) => {
               <div className="px-3 py-2">
                 <a
                   href="tel:+1201-984-5730"
-                  className="w-full flex items-center justify-center bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:text-orange-500 px-4 py-2 rounded-full text-sm font-medium"
+                  className="w-full flex items-center justify-center bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:text-orange-500 px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200"
                 >
                   <svg
                     className="h-4 w-4 mr-1"
