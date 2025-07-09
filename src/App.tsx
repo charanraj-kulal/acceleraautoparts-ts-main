@@ -1,6 +1,11 @@
 // src/App.tsx
 import { useState, useEffect, useRef } from "react";
-import { Routes, Route, useLocation } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useLocation,
+} from "react-router-dom";
 import Lenis from "@studio-freight/lenis";
 import Navbar from "./components/Global/Navbar";
 import Footer from "./components/Global/Footer";
@@ -80,47 +85,49 @@ function App() {
       <PageLoader />
       <GlobalOverlay />
       <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />
-
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/aboutus" element={<AboutUs />} />
-        <Route path="/contactus" element={<ContactUs />} />
-        <Route path="/used-auto-parts/used-engines" element={<UsedEngines />} />
-        <Route
-          path="/used-auto-parts/used-transmissions"
-          element={<UsedTransmissions />}
-        />
-        <Route path="/used-auto-parts/used-wheels" element={<UsedWheels />} />
-        <Route path="/used-auto-parts/drive-shaft" element={<DriveShaft />} />
-        <Route
-          path="/used-auto-parts/used-ac-compressor"
-          element={<UsedACCompressor />}
-        />
-        <Route
-          path="/used-auto-parts/used-headlight"
-          element={<UsedHeadlights />}
-        />
-        <Route
-          path="/used-auto-parts/used-transfer-case"
-          element={<UsedTransferCase />}
-        />
-        <Route
-          path="/used-auto-parts/used-axle-assembly"
-          element={<UsedAxleAssembly />}
-        />
-        <Route
-          path="/used-auto-parts/used-radiator"
-          element={<UsedRadiator />}
-        />
-        <Route
-          path="/used-auto-parts/used-steering-column"
-          element={<UsedSteeringColumn />}
-        />
-        <Route path="/thankyou" element={<ThankYouPage />} />
-      </Routes>
-
+      <Router>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/aboutus" element={<AboutUs />} />
+          <Route path="/contactus" element={<ContactUs />} />
+          <Route
+            path="/used-auto-parts/used-engines"
+            element={<UsedEngines />}
+          />
+          <Route
+            path="/used-auto-parts/used-transmissions"
+            element={<UsedTransmissions />}
+          />
+          <Route path="/used-auto-parts/used-wheels" element={<UsedWheels />} />
+          <Route path="/used-auto-parts/drive-shaft" element={<DriveShaft />} />
+          <Route
+            path="/used-auto-parts/used-ac-compressor"
+            element={<UsedACCompressor />}
+          />
+          <Route
+            path="/used-auto-parts/used-headlight"
+            element={<UsedHeadlights />}
+          />
+          <Route
+            path="/used-auto-parts/used-transfer-case"
+            element={<UsedTransferCase />}
+          />
+          <Route
+            path="/used-auto-parts/used-axle-assembly"
+            element={<UsedAxleAssembly />}
+          />
+          <Route
+            path="/used-auto-parts/used-radiator"
+            element={<UsedRadiator />}
+          />
+          <Route
+            path="/used-auto-parts/used-steering-column"
+            element={<UsedSteeringColumn />}
+          />
+          <Route path="/thankyou" element={<ThankYouPage />} />
+        </Routes>
+      </Router>
       <AutoPartsModalForm isOpen={isOpen} onClose={closeModal} />
-
       <Footer />
     </div>
   );
