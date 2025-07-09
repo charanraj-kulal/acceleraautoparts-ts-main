@@ -844,24 +844,33 @@ const AutoPartsForm = ({
 
   type CarMake = keyof typeof carData;
 
-  const years = Array.from({ length: 30 }, (_, i) => 2024 - i);
+  const years = Array.from({ length: 40 }, (_, i) => 2024 - i);
   const makes = Object.keys(carData);
 
   const partTypes = [
     "Engine",
     "Transmission",
-    "Body Parts",
-    "Electrical",
+    "Door Mirror",
+    "Transfercase",
+    "Cylinder Head",
+    "Headlight",
+    "Tail Light",
+    "Wheels / Rims",
+    "Seat belt",
+    "Air bag",
+    "Stering coloum",
+    "Radio",
     "Suspension",
-    "Brakes",
-    "Exhaust",
-    "Interior",
-    "Exterior",
-    "Wheels & Tires",
-    "Lighting",
-    "Cooling System",
+    "Electrical",
+    "Rearview mirror",
+    "Engine Computer",
     "Fuel System",
     "Air Conditioning",
+    "Brakes",
+    "Exhaust",
+    "Interior Parts",
+    "Body Parts",
+    "Others",
   ];
   const API_URL =
     process.env.NODE_ENV === "production"
@@ -1044,6 +1053,7 @@ const AutoPartsForm = ({
                   {year}
                 </option>
               ))}
+              <option value="Other">Other</option>
             </select>
           </div>
         </div>

@@ -226,6 +226,7 @@ const Footer = () => {
             Distributed by{" "}
             <a
               href="https://webhooksstudio.vercel.app/"
+              target="_blank"
               className="text-orange-500 hover:text-orange-600 transition-colors duration-200"
             >
               Webhooks Studio
@@ -235,6 +236,7 @@ const Footer = () => {
             Developed by{" "}
             <a
               href="https://charanraj-portfolio.vercel.app/"
+              target="_blank"
               className="text-orange-500 hover:text-orange-600 transition-colors duration-200"
             >
               Charanraj
