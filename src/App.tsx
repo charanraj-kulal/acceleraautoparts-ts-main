@@ -1,10 +1,6 @@
+// src/App.tsx
 import { useState, useEffect, useRef } from "react";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  useLocation,
-} from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import Lenis from "@studio-freight/lenis";
 import Navbar from "./components/Global/Navbar";
 import Footer from "./components/Global/Footer";
@@ -29,17 +25,14 @@ import Home from "./pages/Home";
 import AboutUs from "./pages/AboutUs";
 import ContactUs from "./pages/ContactUs";
 
-// 👇 Create a wrapper so you can use useLocation safely
-function AppRoutes({
-  darkMode,
-  setDarkMode,
-}: {
-  darkMode: boolean;
-  setDarkMode: React.Dispatch<React.SetStateAction<boolean>>;
-}) {
+function App() {
   const { isOpen, closeModal } = useAutoOpenModal(10000);
   const location = useLocation();
   const lenisRef = useRef<Lenis | null>(null);
+
+  const [darkMode, setDarkMode] = useState(() =>
+    document.documentElement.classList.contains("dark")
+  );
 
   // Reset scroll position when route changes
   useEffect(() => {
@@ -48,7 +41,6 @@ function AppRoutes({
     }
   }, [location.pathname]);
 
-  // Initialize smooth scroll
   useEffect(() => {
     const lenis = new Lenis({
       duration: 1.2,
@@ -68,17 +60,27 @@ function AppRoutes({
 
     requestAnimationFrame(raf);
 
+    // Cleanup
     return () => {
       lenis.destroy();
       lenisRef.current = null;
     };
   }, []);
 
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [darkMode]);
+
   return (
-    <>
+    <div className="min-h-screen bg-white dark:bg-gray-900 text-black dark:text-white transition-colors duration-300">
       <PageLoader />
       <GlobalOverlay />
       <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />
+
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/aboutus" element={<AboutUs />} />
@@ -116,30 +118,10 @@ function AppRoutes({
         />
         <Route path="/thankyou" element={<ThankYouPage />} />
       </Routes>
+
       <AutoPartsModalForm isOpen={isOpen} onClose={closeModal} />
+
       <Footer />
-    </>
-  );
-}
-
-function App() {
-  const [darkMode, setDarkMode] = useState(() =>
-    document.documentElement.classList.contains("dark")
-  );
-
-  useEffect(() => {
-    if (darkMode) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, [darkMode]);
-
-  return (
-    <div className="min-h-screen bg-white dark:bg-gray-900 text-black dark:text-white transition-colors duration-300">
-      <Router>
-        <AppRoutes darkMode={darkMode} setDarkMode={setDarkMode} />
-      </Router>
     </div>
   );
 }
