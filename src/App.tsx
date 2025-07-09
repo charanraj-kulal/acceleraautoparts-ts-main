@@ -17,6 +17,7 @@ import UsedAxleAssembly from "./pages/UsedAxleAssembly";
 import UsedRadiator from "./pages/UsedRadiator";
 import UsedSteeringColumn from "./pages/UsedSteeringColumn";
 import ThankYouPage from "./pages/ThankYouPage";
+import NotFoundPage from "./pages/NotFoundPage";
 import {
   AutoPartsModalForm,
   useAutoOpenModal,
@@ -117,6 +118,7 @@ function App() {
           element={<UsedSteeringColumn />}
         />
         <Route path="/thankyou" element={<ThankYouPage />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
 
       <AutoPartsModalForm isOpen={isOpen} onClose={closeModal} />
