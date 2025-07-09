@@ -366,7 +366,7 @@ const AboutUs = () => {
                   Get Quote
                 </button>
                 <button className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-gray-900 px-4 py-2 md:px-6 md:py-3 lg:px-8 lg:py-4 rounded-lg font-semibold transition-all duration-300 flex items-center justify-center text-sm md:text-base">
-                  <Link to="/contactus">Contact Our Team</Link>
+                  <Link to="/contact">Contact Our Team</Link>
                   <ChevronRight className="w-4 h-4 md:w-5 md:h-5 ml-2" />
                 </button>
               </div>
@@ -913,7 +913,7 @@ const AboutUs = () => {
                 </button>
                 <button className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-gray-900 px-6 py-3 md:px-8 md:py-4 lg:px-12 lg:py-4 rounded-lg md:rounded-xl font-semibold transition-all duration-300 shadow-lg md:shadow-xl flex items-center justify-center text-sm md:text-base">
                   <Phone className="w-4 h-4 md:w-5 md:h-5 mr-2" />
-                  <Link to="/contactus">Contact Our Experts</Link>
+                  <Link to="/contact">Contact Our Experts</Link>
                 </button>
                 <button
                   onClick={() => setModalOpen(true)}

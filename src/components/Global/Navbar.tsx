@@ -127,9 +127,9 @@ const Navbar = ({ darkMode, setDarkMode }: NavbarProps) => {
                   ABOUT US
                 </Link>
                 <Link
-                  to="/contactus"
+                  to="/contact"
                   onClick={handleLinkClick}
-                  className={getLinkClasses("/contactus")}
+                  className={getLinkClasses("/contact")}
                 >
                   CONTACT
                 </Link>
@@ -396,10 +396,10 @@ const Navbar = ({ darkMode, setDarkMode }: NavbarProps) => {
                 ABOUT US
               </Link>
               <Link
-                to="/contactus"
+                to="/contact"
                 onClick={handleLinkClick}
                 className={`block px-3 py-2 font-medium ${
-                  isActiveLink("/contactus")
+                  isActiveLink("/contact")
                     ? "text-orange-500"
                     : "text-gray-700 dark:text-gray-300 hover:text-orange-500"
                 }`}

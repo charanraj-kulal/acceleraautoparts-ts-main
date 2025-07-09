@@ -74,7 +74,7 @@ const Hero = () => {
             <span className="text-orange-500">The Best Deals</span>
           </h1>
           <button className="bg-orange-500 hover:bg-orange-600 text-white px-6 sm:px-8 py-2 sm:py-3 rounded-full text-base sm:text-lg font-semibold transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl">
-            <Link to="/contactus" className="flex items-center justify-center">
+            <Link to="/contact" className="flex items-center justify-center">
               Contact Us
             </Link>
           </button>

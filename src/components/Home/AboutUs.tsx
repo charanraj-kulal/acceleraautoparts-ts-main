@@ -452,7 +452,7 @@ const AboutUs = () => {
                 Shop Parts Now
               </button>
               <button className="w-full sm:w-auto bg-transparent border-2 border-white text-white hover:bg-white hover:text-gray-900 px-6 sm:px-10 py-3 sm:py-4 rounded-lg font-semibold transition-all duration-200 shadow-lg text-base sm:text-lg mt-2 sm:mt-0">
-                <Link to="/contactus">Contact Our Experts</Link>
+                <Link to="/contact">Contact Our Experts</Link>
               </button>
             </div>
           </div>
