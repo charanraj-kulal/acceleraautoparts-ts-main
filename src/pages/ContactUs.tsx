@@ -12,6 +12,8 @@ import {
 } from "lucide-react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
+
 // Contact form data type
 type ContactFormData = {
   name: string;
@@ -31,6 +33,8 @@ interface Toast {
 }
 
 const ContactUs = () => {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState<ContactFormData>({
     name: "",
     email: "",
@@ -142,6 +146,7 @@ const ContactUs = () => {
         subject: "",
         message: "",
       });
+      navigate("/thankyou");
     } catch (error) {
       console.error("Error submitting form:", error);
 

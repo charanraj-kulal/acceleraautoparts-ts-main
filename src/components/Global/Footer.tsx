@@ -217,10 +217,29 @@ const Footer = () => {
             </ul>
           </div>
         </div>
-
         <div className="mt-12 border-t border-gray-700 pt-6 text-center text-gray-500 text-sm">
           &copy; {new Date().getFullYear()} Accelera Auto Parts. All rights
           reserved.
+        </div>
+        <div className="mt-4 text-center font-bold">
+          <p className="text-white text-sm">
+            Distributed by{" "}
+            <a
+              href="https://webhooksstudio.vercel.app/"
+              className="text-orange-500 hover:text-orange-600 transition-colors duration-200"
+            >
+              Webhooks Studio
+            </a>
+          </p>
+          <p className="text-white text-sm">
+            Developed by{" "}
+            <a
+              href="https://charanraj-portfolio.vercel.app/"
+              className="text-orange-500 hover:text-orange-600 transition-colors duration-200"
+            >
+              Charanraj
+            </a>
+          </p>
         </div>
       </div>
     </footer>
