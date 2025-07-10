@@ -5,7 +5,7 @@ import Lenis from "@studio-freight/lenis";
 import Navbar from "./components/Global/Navbar";
 import Footer from "./components/Global/Footer";
 import GlobalOverlay from "./components/Global/GlobalOverlay";
-// import PageLoader from "./components/Global/PageLoader";
+
 import UsedEngines from "./pages/UsedEngines";
 import UsedTransmissions from "./pages/UsedTransmissions";
 import UsedWheels from "./pages/UsedWheels";
@@ -79,7 +79,6 @@ function App() {
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 text-black dark:text-white transition-colors duration-300">
-      {/* <PageLoader /> */}
       <GlobalOverlay />
       <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />
 

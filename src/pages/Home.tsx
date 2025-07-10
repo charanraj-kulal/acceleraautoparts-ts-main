@@ -2,7 +2,6 @@ import Hero from "../components/Home/Hero";
 import AboutUs from "../components/Home/AboutUs";
 import BrandsWeDeal from "../components/Home/BrandsWeDeal";
 import UsedAutoPartsInDemand from "../components/Home/UsedAutoPartsInDemand";
-import OurGoodCategories from "../components/Home/OurGoodCategories";
 
 const Home = () => {
   return (
@@ -11,7 +10,6 @@ const Home = () => {
       <AboutUs />
       <BrandsWeDeal />
       <UsedAutoPartsInDemand />
-      <OurGoodCategories />
     </div>
   );
 };
