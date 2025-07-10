@@ -298,7 +298,9 @@ const UsedTransferCase = () => {
                 </h4>
                 <div className="flex items-center space-x-3">
                   <Phone className="h-6 w-6" />
-                  <span className="text-2xl font-bold">+1 201-984-5730</span>
+                  <a href="tel:+12019845730">
+                    <span className="text-2xl font-bold">+1 201-984-5730</span>
+                  </a>
                 </div>
               </div>
             </div>
@@ -383,9 +385,11 @@ const UsedTransferCase = () => {
                 </button>
                 <div className="flex items-center justify-center text-white">
                   <span className="text-lg">Or call us - </span>
-                  <span className="font-bold text-xl ml-2">
-                    +1 201-984-5730
-                  </span>
+                  <a href="tel:+12019845730">
+                    <span className="font-bold text-xl ml-2">
+                      +1 201-984-5730
+                    </span>
+                  </a>
                 </div>
               </div>
             </div>

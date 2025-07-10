@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { AutoPartsForm } from "./AutoPartsForm";
-import { Link } from "react-router-dom";
 
+import { AutoPartsModalForm } from "./AutoPartsForm";
 const Hero = () => {
   const [, setIsVideoLoaded] = useState(false);
   const [videoError, setVideoError] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
   const [currentVideoSource, setCurrentVideoSource] = useState(0);
 
   // Video sources with multiple fallbacks
@@ -73,10 +74,11 @@ const Hero = () => {
             <br className="hidden sm:block" />
             <span className="text-orange-500">The Best Deals</span>
           </h1>
-          <button className="bg-orange-500 hover:bg-orange-600 text-white px-6 sm:px-8 py-2 sm:py-3 rounded-full text-base sm:text-lg font-semibold transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl">
-            <Link to="/contact" className="flex items-center justify-center">
-              Contact Us
-            </Link>
+          <button
+            onClick={() => setModalOpen(true)}
+            className="bg-orange-500 hover:bg-orange-600 text-white px-6 sm:px-8 py-2 sm:py-3 rounded-full text-base sm:text-lg font-semibold transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
+          >
+            Contact Us
           </button>
         </div>
 
@@ -88,6 +90,10 @@ const Hero = () => {
           />
         </div>
       </div>
+      <AutoPartsModalForm
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+      />
     </div>
   );
 };
