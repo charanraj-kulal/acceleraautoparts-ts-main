@@ -1,6 +1,7 @@
 import { useState, useEffect, type ChangeEvent, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { collection, addDoc } from "firebase/firestore";
+import { db } from "@/lib/firebase"; // adjust path as needed
 import "@fontsource/montserrat/400.css";
 import "@fontsource/montserrat/700.css";
 import React from "react";
@@ -943,7 +944,10 @@ const AutoPartsForm = ({
       await fetch(`${API_URL}/api/submissionhit`, {
         method: "GET",
       });
-
+      await addDoc(collection(db, "autoPartRequests"), {
+        ...formData,
+        timestamp: new Date().toISOString(),
+      });
       toast.success(
         "Your request has been submitted successfully! Check your email for confirmation."
       );

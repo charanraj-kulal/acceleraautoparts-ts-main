@@ -26,6 +26,7 @@ import Home from "./pages/Home";
 import AboutUs from "./pages/AboutUs";
 import ContactUs from "./pages/ContactUs";
 import UsedAutoPartsPage from "./pages/UsedAutoPartsPage";
+
 function App() {
   const { isOpen, closeModal } = useAutoOpenModal(10000);
   const location = useLocation();
